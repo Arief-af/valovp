@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 03, 2023 at 07:54 PM
+-- Generation Time: Jun 03, 2023 at 08:28 PM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.11
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `vpvalorant`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_create` (IN `id_role` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(50))   BEGIN
+insert INTO roles(id_role, name) VALUES(id_role, name);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_delete` (IN `id` INT(25))   BEGIN
+delete FROM roles WHERE id_role = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_read` ()   BEGIN
+SELECT * FROM roles;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_update` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(50))   BEGIN
+UPDATE roles SET name = name WHERE id_role = id;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -57,6 +79,14 @@ CREATE TABLE `roles` (
   `id_role` int(25) NOT NULL,
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id_role`, `name`) VALUES
+(1, 'user'),
+(2, 'admin');
 
 -- --------------------------------------------------------
 
@@ -189,7 +219,7 @@ ALTER TABLE `checkout`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id_role` int(25) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_role` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transactions`
