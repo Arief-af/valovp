@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 03, 2023 at 08:28 PM
+-- Generation Time: Jun 03, 2023 at 09:18 PM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.11
 
@@ -30,7 +30,18 @@ insert INTO roles(id_role, name) VALUES(id_role, name);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `role_delete` (IN `id` INT(25))   BEGIN
-delete FROM roles WHERE id_role = id;
+    DECLARE affected_rows INT;
+
+    DELETE FROM roles WHERE id_role = id;
+    SET affected_rows = ROW_COUNT();
+
+    IF affected_rows = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The provided ID does not exist.';
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_edit` (IN `id` INT(25))   BEGIN
+SELECT * from roles where id_role = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `role_read` ()   BEGIN
@@ -219,7 +230,7 @@ ALTER TABLE `checkout`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id_role` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_role` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `transactions`
