@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { users } = require('../controllers');
 const { roles } = require('../controllers');
 
-// api
+// api route
 module.exports = router;
 
 router.get('/users', users.getDataUser);
