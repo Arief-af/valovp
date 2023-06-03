@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { users } = require('../controllers');
 const { roles } = require('../controllers');
 
+// api
 module.exports = router;
 
 router.get('/users', users.getDataUser);
