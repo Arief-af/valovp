@@ -25,19 +25,19 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `role_create` (IN `id_role` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(50))   BEGIN
+CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_create` (IN `id_role` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(50))   BEGIN
 insert INTO roles(id_role, name) VALUES(id_role, name);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `role_delete` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_delete` (IN `id` INT(25))   BEGIN
 delete FROM roles WHERE id_role = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `role_read` ()   BEGIN
+CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_read` ()   BEGIN
 SELECT * FROM roles;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `role_update` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(50))   BEGIN
+CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_update` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(50))   BEGIN
 UPDATE roles SET name = name WHERE id_role = id;
 END$$
 
