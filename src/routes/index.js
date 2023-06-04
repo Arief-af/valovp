@@ -29,8 +29,8 @@ router.post('/banks/create', banks.createDataBanks);
 router.post('/banks/delete', banks.deleteDataBanks);
 
 router.get('/virtual_account', virtual_account.getDataVirtual_account);
-router.get('/virtual_account/edit', virtual_accounts.editDataVirtual_account);
-router.post('/virtual_account/update', virtual_accounts.updateDataVirtual_account);
+router.get('/virtual_account/edit', virtual_account.editDataVirtual_account);
+router.post('/virtual_account/update', virtual_account.updateDataVirtual_account);
 router.post('/virtual_account/create', virtual_account.createDataVirtual_account);
 router.post('/virtual_account/delete', virtual_account.deleteDataVirtual_account);
 
