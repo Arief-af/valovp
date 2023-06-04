@@ -34,13 +34,13 @@ module.exports ={
 
                 //timestamp nya belum
                 `
-               call transaction_create(${req.body.id_transaction}, ${req.body.voucher_id}, ${req.body.user_id}, ${req.body.riotId});
+               call transaction_create('${req.body.id_transaction}', '${req.body.voucher_id}', '${req.body.user_id}', '${req.body.riotId}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data transaction with ${id_transaction} has been created`,
+                    message: `Data transaction with ${req.body.id_transaction} has been created`,
                     data: results 
                 });
             });
@@ -53,13 +53,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call transaction_delete(${id_transaction});
+               call transaction_delete('${req.body.id_transaction}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data transaction with ${id_transaction} has been deleted`,
+                    message: `Data transaction with ${req.body.id_transaction} has been deleted`,
                     data: results 
                 });
             });
@@ -74,13 +74,13 @@ module.exports ={
 
                 //timestamp nya belum
                 `
-               call transaction_update(${req.body.id_transaction}, ${req.body.voucher_id}, ${req.body.user_id}, ${req.body.riotId});
+               call transaction_update('${req.body.id_transaction}', '${req.body.voucher_id}', '${req.body.user_id}', '${req.body.riotId}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data transaction with ${id_transaction} has been updated`,
+                    message: `Data transaction with ${req.body.id_transaction} has been updated`,
                     data: results 
                 });
             });

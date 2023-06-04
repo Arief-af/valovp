@@ -34,13 +34,13 @@ module.exports ={
 
                 //timestamp nya belum
                 `
-               call checkout_create(${req.body.id_checkout}, ${req.body.virtual_account_id}, ${req.body.transaction_id}, ${req.body.total_payment}, ${req.body.status});
+               call checkout_create('${req.body.id_checkout}', '${req.body.virtual_account_id}', '${req.body.transaction_id}', '${req.body.total_payment}', '${req.body.status}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data checkout with ${id_checkout} has been created`,
+                    message: `Data checkout with ${req.body.id_checkout} has been created`,
                     data: results 
                 });
             });
@@ -53,13 +53,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call checkout_delete(${id_checkout});
+               call checkout_delete('${req.body.id_checkout}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data checkout with ${id_checkout} has been deleted`,
+                    message: `Data checkout with ${req.body.id_checkout} has been deleted`,
                     data: results 
                 });
             });
@@ -74,13 +74,13 @@ module.exports ={
 
                  //timestamp nya belum
                 `
-               call checkout_update(${req.body.id_checkout}, ${req.body.virtual_account_id}, ${req.body.transaction_id}, ${req.body.total_payment}, ${req.body.status});
+               call checkout_update('${req.body.id_checkout}', '${req.body.virtual_account_id}', '${req.body.transaction_id}', '${req.body.total_payment}', '${req.body.status}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data checkout with ${id_checkout} has been updated`,
+                    message: `Data checkout with ${req.body.id_checkout} has been updated`,
                     data: results 
                 });
             });
