@@ -32,13 +32,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call virtual_account_create(${req.body.id_virtual_account}, ${req.body.name}, ${req.body.number});
+               call virtual_account_create('${req.body.id_virtual_account}', '${req.body.name}', '${req.body.number}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data virtual_account with ${id_virtual_account} has been created`,
+                    message: `Data virtual_account with ${req.body.id_virtual_account} has been created`,
                     data: results 
                 });
             });
@@ -51,13 +51,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call virtual_account_delete(${id_virtual_account});
+               call virtual_account_delete('${req.body.id_virtual_account}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data virtual_account with ${id_virtual_account} has been deleted`,
+                    message: `Data virtual_account with ${req.body.id_virtual_account} has been deleted`,
                     data: results 
                 });
             });
@@ -70,13 +70,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call virtual_account_update(${req.body.virtual_account}, ${req.body.name}, ${req.body.number});
+               call virtual_account_update('${req.body.virtual_account}', '${req.body.name}', '${req.body.number}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data virtual_account with ${id_virtual_account} has been updated`,
+                    message: `Data virtual_account with ${req.body.id_virtual_account} has been updated`,
                     data: results 
                 });
             });
@@ -89,13 +89,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call virtual_account_edit(${id_virtual_account});
+               call virtual_account_edit('${req.body.id_virtual_account}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting virtual_account Data with id ${id_virtual_account}`,
+                    message: `Collecting virtual_account Data with id ${req.body.id_virtual_account}`,
                     data: results 
                 });
             });

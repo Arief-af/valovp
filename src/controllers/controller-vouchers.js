@@ -32,13 +32,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call voucher_create(${req.body.id_voucher}, ${req.body.amount}, ${req.body.price});
+               call voucher_create('${req.body.id_voucher}', '${req.body.amount}', '${req.body.price}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data voucher with ${id_voucher} has been created`,
+                    message: `Data voucher with ${req.body.id_voucher} has been created`,
                     data: results 
                 });
             });
@@ -51,13 +51,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call voucher_delete(${id_voucher});
+               call voucher_delete('${req.body.id_voucher}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data voucher with ${id_voucher} has been deleted`,
+                    message: `Data voucher with ${req.body.id_voucher} has been deleted`,
                     data: results 
                 });
             });
@@ -70,13 +70,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call voucher_update(${req.body.id_voucher}, ${req.body.amount}, ${req.body.price});
+               call voucher_update('${req.body.id_voucher}', '${req.body.amount}', '${req.body.price}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data voucher with ${id_voucher} has been updated`,
+                    message: `Data voucher with ${req.body.id_voucher} has been updated`,
                     data: results 
                 });
             });
@@ -89,13 +89,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call voucher_edit(${id_voucher});
+               call voucher_edit('${req.body.id_voucher}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting voucher Data with id ${id_voucher}`,
+                    message: `Collecting voucher Data with id ${req.body.id_voucher}`,
                     data: results 
                 });
             });
