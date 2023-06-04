@@ -8,7 +8,7 @@ pool.on('error',(err)=> {
 
 module.exports ={
     // Ambil data semua users
-    getDataUser(req,res){
+    getDataCheckout(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -27,7 +27,7 @@ module.exports ={
         })
     },
 
-    createDataUser(req,res){
+    createDataCheckout(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -48,7 +48,7 @@ module.exports ={
         })
     },
 
-    deleteDataUser(req,res){
+    deleteDataCheckout(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -67,7 +67,7 @@ module.exports ={
         })
     },
 
-    updateDataUser(req,res){
+    updateDataCheckout(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -86,26 +86,6 @@ module.exports ={
             });
             connection.release();
         })
-    },
-
-    editDataUser(req,res){
-        pool.getConnection(function(err, connection) {
-            if (err) throw err;
-            connection.query(
-                `
-               call checkout_edit(${id_checkout});
-                `
-            , function (error, results) {
-                if(error) throw error;  
-                res.send({ 
-                    success: true, 
-                    message: `Collecting checkout Data with id ${id_checkout}`,
-                    data: results 
-                });
-            });
-            connection.release();
-        })
-    },
-
+    }
 }
 

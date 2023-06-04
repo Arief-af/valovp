@@ -8,7 +8,7 @@ pool.on('error',(err)=> {
 
 module.exports ={
     // Ambil data semua users
-    getDataUser(req,res){
+    getDataBanks(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -27,7 +27,7 @@ module.exports ={
         })
     },
 
-    createDataUser(req,res){
+    createDataBanks(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -46,7 +46,7 @@ module.exports ={
         })
     },
 
-    deleteDataUser(req,res){
+    deleteDataBanks(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -65,7 +65,7 @@ module.exports ={
         })
     },
 
-    updateDataUser(req,res){
+    updateDataBanks(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -84,7 +84,7 @@ module.exports ={
         })
     },
 
-    editDataUser(req,res){
+    editDataBanks(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(

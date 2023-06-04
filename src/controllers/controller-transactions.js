@@ -8,7 +8,7 @@ pool.on('error',(err)=> {
 
 module.exports ={
     // Ambil data semua users
-    getDataUser(req,res){
+    getDataTransactions(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -27,7 +27,7 @@ module.exports ={
         })
     },
 
-    createDataUser(req,res){
+    createDataTransactions(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -48,7 +48,7 @@ module.exports ={
         })
     },
 
-    deleteDataUser(req,res){
+    deleteDataTransactions(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -67,7 +67,7 @@ module.exports ={
         })
     },
 
-    updateDataUser(req,res){
+    updateDataTransactions(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -87,25 +87,5 @@ module.exports ={
             connection.release();
         })
     },
-
-    editDataUser(req,res){
-        pool.getConnection(function(err, connection) {
-            if (err) throw err;
-            connection.query(
-                `
-               call transaction_edit(${id_transaction});
-                `
-            , function (error, results) {
-                if(error) throw error;  
-                res.send({ 
-                    success: true, 
-                    message: `Collecting transaction Data with id ${id_transaction}`,
-                    data: results 
-                });
-            });
-            connection.release();
-        })
-    },
-
 }
 

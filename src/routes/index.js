@@ -12,43 +12,41 @@ const authMiddleware = require('../middleware/auth');
 // api route
 module.exports = router;
 
-router.get('/checkout', checkout.getDataRole);
-router.get('/checkout/edit', checkout.editDataRole);
-router.post('/checkout/update', checkout.updateDataRole);
-router.post('/checkout/create', checkout.createDataRole);
-router.post('/checkout/delete', checkout.deleteDataRole);
+router.get('/checkout', checkout.getDataCheckout);
+router.post('/checkout/update', checkout.updateDataCheckout);
+router.post('/checkout/create', checkout.createDataCheckout);
+router.post('/checkout/delete', checkout.deleteDataCheckout);
 
-router.get('/transactions', transactions.getDataRole);
-router.get('/transactions/edit', transactions.editDataRole);
-router.post('/transactions/update', transactions.updateDataRole);
-router.post('/transactions/create', transactions.createDataRole);
-router.post('/transactions/delete', transactions.deleteDataRole);
+router.get('/transactions', transactions.getDataTransactions);
+router.post('/transactions/update', transactions.updateDataTransactions);
+router.post('/transactions/create', transactions.createDataTransactions);
+router.post('/transactions/delete', transactions.deleteDataTransactions);
 
-router.get('/banks', banks.getDataRole);
-router.get('/banks/edit', banks.editDataRole);
-router.post('/banks/update', banks.updateDataRole);
-router.post('/banks/create', banks.createDataRole);
-router.post('/banks/delete', banks.deleteDataRole);
+router.get('/banks', banks.getDataBanks);
+router.get('/banks/edit', banks.editDataBanks);
+router.post('/banks/update', banks.updateDataBanks);
+router.post('/banks/create', banks.createDataBanks);
+router.post('/banks/delete', banks.deleteDataBanks);
 
-router.get('/virtual_account', virtual_account.getDataRole);
-router.get('/virtual_account/edit', virtual_accounts.editDataRole);
-router.post('/virtual_account/update', virtual_accounts.updateDataRole);
-router.post('/virtual_account/create', virtual_account.createDataRole);
-router.post('/virtual_account/delete', virtual_account.deleteDataRole);
+router.get('/virtual_account', virtual_account.getDataVirtual_account);
+router.get('/virtual_account/edit', virtual_accounts.editDataVirtual_account);
+router.post('/virtual_account/update', virtual_accounts.updateDataVirtual_account);
+router.post('/virtual_account/create', virtual_account.createDataVirtual_account);
+router.post('/virtual_account/delete', virtual_account.deleteDataVirtual_account);
 
-router.get('/vouchers', vouchers.getDataRole);
-router.get('/vouchers/edit', vouchers.editDataRole);
-router.post('/vouchers/update', vouchers.updateDataRole);
-router.post('/vouchers/create', vouchers.createDataRole);
-router.post('/vouchers/delete', vouchers.deleteDataRole);
+router.get('/vouchers', vouchers.getDataVouchers);
+router.get('/vouchers/edit', vouchers.editDataVouchers);
+router.post('/vouchers/update', vouchers.updateDataVouchers);
+router.post('/vouchers/create', vouchers.createDataVouchers);
+router.post('/vouchers/delete', vouchers.deleteDataVouchers);
 
 
 router.get('/users', authMiddleware, users.getDataUser);
-router.get('/users', users.getDataRole);
-router.get('/users/edit', users.editDataRole);
-router.post('/users/update', users.updateDataRole);
-router.post('/users/create', users.createDataRole);
-router.post('/users/delete', users.deleteDataRole);
+router.get('/users', users.getDataUser);
+router.get('/users/edit', users.editDataUser);
+router.post('/users/update', users.updateDataUser);
+router.post('/users/create', users.createDataUser);
+router.post('/users/delete', users.deleteDataUser);
 
 router.get('/roles', roles.getDataRole);
 router.get('/roles/edit', roles.editDataRole);
