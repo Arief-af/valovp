@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 03, 2023 at 09:18 PM
+-- Generation Time: Jun 04, 2023 at 08:42 AM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.11
 
@@ -174,8 +174,8 @@ ALTER TABLE `banks`
 --
 ALTER TABLE `checkout`
   ADD PRIMARY KEY (`id_checkout`),
-  ADD UNIQUE KEY `virtual_account_id` (`virtual_account_id`),
-  ADD UNIQUE KEY `transaction_id` (`transaction_id`);
+  ADD KEY `virtual_account_id` (`virtual_account_id`),
+  ADD KEY `transaction_id` (`transaction_id`);
 
 --
 -- Indexes for table `roles`
@@ -188,15 +188,15 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id_transaction`),
-  ADD UNIQUE KEY `voucher_id` (`voucher_id`),
-  ADD UNIQUE KEY `user_id` (`user_id`);
+  ADD KEY `voucher_id` (`voucher_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`),
-  ADD UNIQUE KEY `id_role` (`id_role`);
+  ADD KEY `id_role` (`id_role`);
 
 --
 -- Indexes for table `virtual_account`
@@ -264,15 +264,15 @@ ALTER TABLE `vouchers`
 -- Constraints for table `checkout`
 --
 ALTER TABLE `checkout`
-  ADD CONSTRAINT `checkout_ibfk_1` FOREIGN KEY (`virtual_account_id`) REFERENCES `virtual_account` (`id_virtual_account`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `checkout_ibfk_2` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id_transaction`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `checkout_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id_transaction`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `checkout_ibfk_2` FOREIGN KEY (`virtual_account_id`) REFERENCES `virtual_account` (`id_virtual_account`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `transactions`
 --
 ALTER TABLE `transactions`
-  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id_voucher`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id_voucher`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users`
