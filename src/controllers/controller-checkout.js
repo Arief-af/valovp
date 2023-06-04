@@ -13,13 +13,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_read();
+               call checkout_read();
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: 'Collecting all data from user table',
+                    message: 'Collecting all data from checkout table',
                     data: results 
                 });
             });
@@ -31,14 +31,16 @@ module.exports ={
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
+
+                //timestamp nya belum
                 `
-               call user_create(${req.body.id_user}, ${req.body.role_id}, ${req.body.email}, ${req.body.username}, ${req.body.password});
+               call checkout_create(${req.body.id_checkout}, ${req.body.virtual_account_id}, ${req.body.transaction_id}, ${req.body.total_payment}, ${req.body.status});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been created`,
+                    message: `Data checkout with ${id_checkout} has been created`,
                     data: results 
                 });
             });
@@ -51,13 +53,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_delete(${id_user});
+               call checkout_delete(${id_checkout});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been deleted`,
+                    message: `Data checkout with ${id_checkout} has been deleted`,
                     data: results 
                 });
             });
@@ -69,14 +71,16 @@ module.exports ={
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
+
+                 //timestamp nya belum
                 `
-               call user_update(${req.body.id_user}, ${req.body.role_id}, ${req.body.email}, ${req.body.username}, ${req.body.password});
+               call checkout_update(${req.body.id_checkout}, ${req.body.virtual_account_id}, ${req.body.transaction_id}, ${req.body.total_payment}, ${req.body.status});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been updated`,
+                    message: `Data checkout with ${id_checkout} has been updated`,
                     data: results 
                 });
             });
@@ -89,13 +93,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_edit(${id_user});
+               call checkout_edit(${id_checkout});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting user Data with id ${id_user}`,
+                    message: `Collecting checkout Data with id ${id_checkout}`,
                     data: results 
                 });
             });

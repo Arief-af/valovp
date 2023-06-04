@@ -13,13 +13,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_read();
+               call bank_read();
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: 'Collecting all data from user table',
+                    message: 'Collecting all data from bank table',
                     data: results 
                 });
             });
@@ -32,13 +32,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_create(${req.body.id_user}, ${req.body.role_id}, ${req.body.email}, ${req.body.username}, ${req.body.password});
+               call bank_create(${req.body.id_bank}, ${req.body.name});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been created`,
+                    message: `Data bank with ${id_bank} has been created`,
                     data: results 
                 });
             });
@@ -51,13 +51,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_delete(${id_user});
+               call bank_delete(${id_bank});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been deleted`,
+                    message: `Data bank with ${id_bank} has been deleted`,
                     data: results 
                 });
             });
@@ -70,13 +70,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_update(${req.body.id_user}, ${req.body.role_id}, ${req.body.email}, ${req.body.username}, ${req.body.password});
+               call bank_update(${req.body.id_bank}, ${req.body.name});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been updated`,
+                    message: `Data bank with ${id_bank} has been updated`,
                     data: results 
                 });
             });
@@ -89,13 +89,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_edit(${id_user});
+               call bank_edit(${id_bank});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting user Data with id ${id_user}`,
+                    message: `Collecting bank Data with id ${id_bank}`,
                     data: results 
                 });
             });

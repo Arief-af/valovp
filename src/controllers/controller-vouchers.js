@@ -13,13 +13,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_read();
+               call voucher_read();
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: 'Collecting all data from user table',
+                    message: 'Collecting all data from voucher table',
                     data: results 
                 });
             });
@@ -32,13 +32,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_create(${req.body.id_user}, ${req.body.role_id}, ${req.body.email}, ${req.body.username}, ${req.body.password});
+               call voucher_create(${req.body.id_voucher}, ${req.body.amount}, ${req.body.price});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been created`,
+                    message: `Data voucher with ${id_voucher} has been created`,
                     data: results 
                 });
             });
@@ -51,13 +51,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_delete(${id_user});
+               call voucher_delete(${id_voucher});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been deleted`,
+                    message: `Data voucher with ${id_voucher} has been deleted`,
                     data: results 
                 });
             });
@@ -70,13 +70,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_update(${req.body.id_user}, ${req.body.role_id}, ${req.body.email}, ${req.body.username}, ${req.body.password});
+               call voucher_update(${req.body.id_voucher}, ${req.body.amount}, ${req.body.price});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been updated`,
+                    message: `Data voucher with ${id_voucher} has been updated`,
                     data: results 
                 });
             });
@@ -89,13 +89,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_edit(${id_user});
+               call voucher_edit(${id_voucher});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting user Data with id ${id_user}`,
+                    message: `Collecting voucher Data with id ${id_voucher}`,
                     data: results 
                 });
             });

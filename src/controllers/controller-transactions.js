@@ -13,13 +13,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_read();
+               call transaction_read();
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: 'Collecting all data from user table',
+                    message: 'Collecting all data from transaction table',
                     data: results 
                 });
             });
@@ -31,14 +31,16 @@ module.exports ={
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
+
+                //timestamp nya belum
                 `
-               call user_create(${req.body.id_user}, ${req.body.role_id}, ${req.body.email}, ${req.body.username}, ${req.body.password});
+               call transaction_create(${req.body.id_transaction}, ${req.body.voucher_id}, ${req.body.user_id}, ${req.body.riotId});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been created`,
+                    message: `Data transaction with ${id_transaction} has been created`,
                     data: results 
                 });
             });
@@ -51,13 +53,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_delete(${id_user});
+               call transaction_delete(${id_transaction});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been deleted`,
+                    message: `Data transaction with ${id_transaction} has been deleted`,
                     data: results 
                 });
             });
@@ -69,14 +71,16 @@ module.exports ={
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
+
+                //timestamp nya belum
                 `
-               call user_update(${req.body.id_user}, ${req.body.role_id}, ${req.body.email}, ${req.body.username}, ${req.body.password});
+               call transaction_update(${req.body.id_transaction}, ${req.body.voucher_id}, ${req.body.user_id}, ${req.body.riotId});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been updated`,
+                    message: `Data transaction with ${id_transaction} has been updated`,
                     data: results 
                 });
             });
@@ -89,13 +93,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_edit(${id_user});
+               call transaction_edit(${id_transaction});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting user Data with id ${id_user}`,
+                    message: `Collecting transaction Data with id ${id_transaction}`,
                     data: results 
                 });
             });

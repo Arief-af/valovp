@@ -32,13 +32,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-                call role_delete(${req.body.id});
+                call role_delete(${req.body.id_role});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data role with ${id} has been deleted`,
+                    message: `Data role with ${id_role} has been deleted`,
                     data: results 
                 });
             });
@@ -51,13 +51,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-                call role_update(${req.body.id}, ${req.body.name});
+                call role_update(${req.body.id_role}, ${req.body.name});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data role with ${id} has been updated`,
+                    message: `Data role with ${id_role} has been updated`,
                     data: results 
                 });
             });
@@ -70,13 +70,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-                call role_create(${req.body.id}, ${req.body.name});
+                call role_create(${req.body.id_role}, ${req.body.name});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data role with ${id} has been created`,
+                    message: `Data role with ${id_role} has been created`,
                     data: results 
                 });
             });
@@ -89,13 +89,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-                call role_edit(${req.body.id});
+                call role_edit(${req.body.id_role});
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting Role Data with id ${req.body.id}`,
+                    message: `Collecting Role Data with id ${req.body.id_role}`,
                     data: results 
                 });
             });
