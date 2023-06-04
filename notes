@@ -1,3 +1,5 @@
 Tolong ganti UNIQUE di setiap FK jadi index aja.   
     - drop dulu fknya baru, hapus uniquenya
 Token di tabel user di delete 
+
+tabel checkout sama tabel transaction jangan ada edit
