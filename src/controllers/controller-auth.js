@@ -13,6 +13,7 @@ module.exports = {
 
     // Execute the query to get the user by username
     pool.query(
+      // nanti ganti bagian ini pake procedure daf
       "SELECT * FROM users WHERE username = ?",
       [username],
       async (error, results) => {
