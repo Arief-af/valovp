@@ -8,7 +8,7 @@ pool.on('error',(err)=> {
 
 module.exports ={
     // Ambil data semua users
-    getDataUser(req,res){
+    getDataTransactions(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -27,20 +27,20 @@ module.exports ={
         })
     },
 
-    createDataUser(req,res){
+    createDataTransactions(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
 
                 //timestamp nya belum
                 `
-               call transaction_create(${req.body.id_transaction}, ${req.body.voucher_id}, ${req.body.user_id}, ${req.body.riotId});
+               call transaction_create('${req.body.id_transaction}', '${req.body.voucher_id}', '${req.body.user_id}', '${req.body.riotId}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data transaction with ${id_transaction} has been created`,
+                    message: `Data transaction with ${req.body.id_transaction} has been created`,
                     data: results 
                 });
             });
@@ -48,18 +48,18 @@ module.exports ={
         })
     },
 
-    deleteDataUser(req,res){
+    deleteDataTransactions(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
                 `
-               call transaction_delete(${id_transaction});
+               call transaction_delete('${req.body.id_transaction}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data transaction with ${id_transaction} has been deleted`,
+                    message: `Data transaction with ${req.body.id_transaction} has been deleted`,
                     data: results 
                 });
             });
@@ -67,45 +67,25 @@ module.exports ={
         })
     },
 
-    updateDataUser(req,res){
+    updateDataTransactions(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
 
                 //timestamp nya belum
                 `
-               call transaction_update(${req.body.id_transaction}, ${req.body.voucher_id}, ${req.body.user_id}, ${req.body.riotId});
+               call transaction_update('${req.body.id_transaction}', '${req.body.voucher_id}', '${req.body.user_id}', '${req.body.riotId}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data transaction with ${id_transaction} has been updated`,
+                    message: `Data transaction with ${req.body.id_transaction} has been updated`,
                     data: results 
                 });
             });
             connection.release();
         })
     },
-
-    editDataUser(req,res){
-        pool.getConnection(function(err, connection) {
-            if (err) throw err;
-            connection.query(
-                `
-               call transaction_edit(${id_transaction});
-                `
-            , function (error, results) {
-                if(error) throw error;  
-                res.send({ 
-                    success: true, 
-                    message: `Collecting transaction Data with id ${id_transaction}`,
-                    data: results 
-                });
-            });
-            connection.release();
-        })
-    },
-
 }
 

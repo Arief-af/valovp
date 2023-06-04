@@ -1,7 +1,7 @@
 module.exports = {
     multipleStatements  : true,
     host                : 'localhost',
-    user                : 'ziaq',
-    password            : 'nolepngoding',
+    user                : 'root',
+    password            : '',
     database            : 'vpvalorant'
 };

@@ -8,7 +8,7 @@ pool.on('error',(err)=> {
 
 module.exports ={
     // Ambil data semua users
-    getDataUser(req,res){
+    getDataBanks(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -27,18 +27,18 @@ module.exports ={
         })
     },
 
-    createDataUser(req,res){
+    createDataBanks(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
                 `
-               call bank_create(${req.body.id_bank}, ${req.body.name});
+               call bank_create('${req.body.id_bank}', '${req.body.name}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data bank with ${id_bank} has been created`,
+                    message: `Data bank with ${req.body.id_bank} has been created`,
                     data: results 
                 });
             });
@@ -46,18 +46,18 @@ module.exports ={
         })
     },
 
-    deleteDataUser(req,res){
+    deleteDataBanks(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
                 `
-               call bank_delete(${id_bank});
+               call bank_delete('${id_bank}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data bank with ${id_bank} has been deleted`,
+                    message: `Data bank with ${req.body.id_bank} has been deleted`,
                     data: results 
                 });
             });
@@ -65,18 +65,18 @@ module.exports ={
         })
     },
 
-    updateDataUser(req,res){
+    updateDataBanks(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
                 `
-               call bank_update(${req.body.id_bank}, ${req.body.name});
+               call bank_update('${req.body.id_bank}', '${req.body.name}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data bank with ${id_bank} has been updated`,
+                    message: `Data bank with ${req.body.id_bank} has been updated`,
                     data: results 
                 });
             });
@@ -84,18 +84,18 @@ module.exports ={
         })
     },
 
-    editDataUser(req,res){
+    editDataBanks(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
                 `
-               call bank_edit(${id_bank});
+               call bank_edit('${id_bank}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting bank Data with id ${id_bank}`,
+                    message: `Collecting bank Data with id ${req.body.id_bank}`,
                     data: results 
                 });
             });

@@ -32,13 +32,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_create(${req.body.id_user}, ${req.body.role_id}, ${req.body.email}, ${req.body.username}, ${req.body.password});
+               call user_create('${req.body.id_user}', '${req.body.role_id}', '${req.body.email}', '${req.body.username}', '${req.body.password}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been created`,
+                    message: `Data user with ${req.body.id_user} has been created`,
                     data: results 
                 });
             });
@@ -51,13 +51,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_delete(${id_user});
+               call user_delete('${req.body.id_user}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been deleted`,
+                    message: `Data user with ${req.body.id_user} has been deleted`,
                     data: results 
                 });
             });
@@ -70,13 +70,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_update(${req.body.id_user}, ${req.body.role_id}, ${req.body.email}, ${req.body.username}, ${req.body.password});
+               call user_update('${req.body.id_user}', '${req.body.role_id}', '${req.body.email}', '${req.body.username}', '${req.body.password}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${id_user} has been updated`,
+                    message: `Data user with ${req.body.id_user} has been updated`,
                     data: results 
                 });
             });
@@ -89,13 +89,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_edit(${id_user});
+               call user_edit('${req.body.id_user}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting user Data with id ${id_user}`,
+                    message: `Collecting user Data with id ${req.body.id_user}`,
                     data: results 
                 });
             });
