@@ -1,7 +1,7 @@
 const users = require('./controller-users');
-const vouchers = require('./controller-vouchers');
+const auth = require('./controller-auth');
 const roles = require('./controller-roles');
 
 module.exports ={
-	users, vouchers,roles
+	users,auth,roles
 };
