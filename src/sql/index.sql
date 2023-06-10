@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1deb5ubuntu1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jun 10, 2023 at 03:39 PM
--- Server version: 8.0.33-0ubuntu0.22.04.2
--- PHP Version: 8.1.18
+-- Host: localhost:3306
+-- Generation Time: Jun 10, 2023 at 11:53 AM
+-- Server version: 5.7.33
+-- PHP Version: 8.1.11
 SET
   SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 
@@ -32,7 +32,7 @@ SET
 DELIMITER $ $ --
 -- Procedures
 --
-CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `bank_create` (
+CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_create` (
   IN `id` INT(25) UNSIGNED ZEROFILL,
   IN `name` VARCHAR(75)
 ) BEGIN
@@ -41,7 +41,7 @@ insert INTO
 VALUES
 (id_bank, name);
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `bank_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
   banks
@@ -57,7 +57,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `bank_edit` (IN `id` INT(25)) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_edit` (IN `id` INT(25)) BEGIN
 SELECT
   *
 from
@@ -65,13 +65,13 @@ from
 where
   id_bank = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `bank_read` () BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_read` () BEGIN
 SELECT
   *
 FROM
   banks;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `bank_update` (IN `id` INT(25), IN `name` VARCHAR(75)) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_update` (IN `id` INT(25), IN `name` VARCHAR(75)) BEGIN
 UPDATE
   banks
 SET
@@ -79,7 +79,7 @@ SET
 WHERE
   id_bank = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `change_status` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `change_status` (
   IN `id` INT(25),
   IN `status` ENUM('pending', 'success', ' failed')
 ) BEGIN
@@ -90,7 +90,7 @@ set
 WHERE
   id_checkout = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `checkout_create` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_create` (
   IN `id` INT(25) UNSIGNED ZEROFILL,
   IN `virtual_account_id` INT(25),
   IN `transaction_id` INT(25),
@@ -114,7 +114,7 @@ VALUES
     status
   );
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `checkout_delete` (IN `id` INT) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_delete` (IN `id` INT) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
   checkout
@@ -130,13 +130,21 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `checkout_read` () BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_read` () BEGIN
 SELECT
-  *
+  checkout.id_checkout,
+  transactions.riotId,
+  virtual_account.name,
+  checkout.total_payment,
+  virtual_account.number,
+  checkout.timestamp,
+  checkout.status
 FROM
-  checkout;
+  checkout
+  JOIN transactions ON checkout.transaction_id = transactions.id_transaction
+  JOIN virtual_account ON checkout.virtual_account_id = virtual_account.id_virtual_account;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `checkout_update` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_update` (
   IN `id` INT(25),
   IN `va_id` INT(25),
   IN `trans_id` INT(25),
@@ -153,7 +161,7 @@ SET
 WHERE
   id_checkout = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `role_create` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_create` (
   IN `id_role` INT(25) UNSIGNED ZEROFILL,
   IN `name` VARCHAR(50)
 ) BEGIN
@@ -162,7 +170,7 @@ insert INTO
 VALUES
 (id_role, name);
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `role_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
   roles
@@ -178,7 +186,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `role_edit` (IN `id` INT(25)) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_edit` (IN `id` INT(25)) BEGIN
 SELECT
   *
 from
@@ -186,13 +194,13 @@ from
 where
   id_role = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `role_read` () BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_read` () BEGIN
 SELECT
   *
 FROM
   roles;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `role_update` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_update` (
   IN `id` INT(25) UNSIGNED ZEROFILL,
   IN `name` VARCHAR(50)
 ) BEGIN
@@ -203,7 +211,7 @@ SET
 WHERE
   id_role = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `transaction_create` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_create` (
   IN `id_transaction` INT(25) UNSIGNED ZEROFILL,
   IN `voucher_id` INT(25),
   IN `user_id` INT(25),
@@ -214,7 +222,7 @@ insert INTO
 VALUES
 (id_transaction, voucher_id, user_id, riotId);
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `transaction_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
   transactions
@@ -230,13 +238,18 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `transaction_read` () BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_read` () BEGIN
 SELECT
-  *
+  transactions.id_transaction,
+  users.username,
+  vouchers.amount,
+  vouchers.price
 FROM
-  transactions;
+  transactions
+  JOIN vouchers ON transactions.voucher_id = vouchers.id_voucher
+  JOIN users ON transactions.user_id = users.id_user;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `transaction_update` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_update` (
   IN `id` INT(25),
   IN `vcr_id` INT(25),
   IN `usr_id` INT(25),
@@ -250,19 +263,34 @@ SET
 WHERE
   id_transaction = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `user_create` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_create` (
   IN `id_user` INT(25) UNSIGNED ZEROFILL,
   IN `role_id` INT(25),
   IN `email` VARCHAR(30),
   IN `username` VARCHAR(30),
-  IN `password` VARCHAR(50)
+  IN `password` VARCHAR(50),
+  IN `name` VARCHAR(30)
 ) BEGIN
 insert INTO
-  users(id_user, role_id, email, username, password)
+  users(
+    id_user,
+    role_id,
+    email,
+    username,
+    password,
+    name
+  )
 VALUES
-(id_user, role_id, email, username, password);
+(
+    id_user,
+    role_id,
+    email,
+    username,
+    password,
+    name
+  );
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `user_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
   users
@@ -278,7 +306,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `user_edit` (IN `id` INT(25)) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_edit` (IN `id` INT(25)) BEGIN
 SELECT
   *
 from
@@ -286,7 +314,7 @@ from
 where
   id_user = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `user_read` () BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_read` () BEGIN
 SELECT
   users.name,
   users.username,
@@ -297,7 +325,7 @@ FROM
   users
   JOIN roles ON users.role_id = roles.id_role;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `user_update` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_update` (
   IN `id` INT(25),
   IN `role_id` INT(25),
   IN `email` VARCHAR(30),
@@ -314,7 +342,7 @@ SET
 WHERE
   id_user = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `virtual_account_create` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_create` (
   IN `id` INT(25) UNSIGNED ZEROFILL,
   IN `name` VARCHAR(25),
   IN `number` VARCHAR(25)
@@ -324,7 +352,7 @@ insert INTO
 VALUES
 (id, name, number);
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `virtual_account_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
   virtual_account
@@ -340,7 +368,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `virtual_account_edit` (IN `id` INT(25)) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_edit` (IN `id` INT(25)) BEGIN
 SELECT
   *
 from
@@ -348,13 +376,13 @@ from
 WHERE
   id_virtual_account = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `virtual_account_read` () BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_read` () BEGIN
 SELECT
   *
 FROM
   virtual_account;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `virtual_account_update` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_update` (
   IN `id` INT(25),
   IN `name` VARCHAR(25),
   IN `number` VARCHAR(25)
@@ -367,7 +395,7 @@ SET
 WHERE
   id_virtual_account = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `voucher_create` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_create` (
   IN `id` INT(25) UNSIGNED ZEROFILL,
   IN `amount` INT(4),
   IN `price` FLOAT
@@ -377,7 +405,7 @@ insert INTO
 VALUES
 (id, amount, price);
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `voucher_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_delete` (IN `id` INT(25)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
   vouchers
@@ -393,7 +421,7 @@ SET
 
 END if;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `voucher_edit` (IN `id` INT(25)) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_edit` (IN `id` INT(25)) BEGIN
 SELECT
   *
 from
@@ -401,13 +429,13 @@ from
 where
   id_voucher = id;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `voucher_read` () BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_read` () BEGIN
 SELECT
   *
 FROM
   vouchers;
 
-END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `voucher_update` (
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_update` (
   IN `id` INT(25),
   IN `amount` INT(4),
   IN `price` FLOAT
@@ -427,7 +455,7 @@ END $ $ DELIMITER;
 -- Table structure for table `banks`
 --
 CREATE TABLE `banks` (
-  `id_bank` int NOT NULL,
+  `id_bank` int(11) NOT NULL,
   `name` varchar(75) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
@@ -446,9 +474,9 @@ VALUES
 -- Table structure for table `checkout`
 --
 CREATE TABLE `checkout` (
-  `id_checkout` int NOT NULL,
-  `virtual_account_id` int NOT NULL,
-  `transaction_id` int NOT NULL,
+  `id_checkout` int(11) NOT NULL,
+  `virtual_account_id` int(11) NOT NULL,
+  `transaction_id` int(11) NOT NULL,
   `total_payment` float NOT NULL,
   `status` enum('pending', 'success', ' failed') NOT NULL,
   `timestamp` timestamp NULL DEFAULT NULL
@@ -470,12 +498,36 @@ VALUES
   (1, 2, 1, 350000, 'pending', NULL),
   (2, 1, 2, 350000, 'success', NULL);
 
+--
+-- Triggers `checkout`
+--
+DELIMITER $ $ CREATE TRIGGER `checkout_after_total_payment`
+AFTER
+INSERT
+  ON `checkout` FOR EACH ROW BEGIN DECLARE total DECIMAL(10, 2);
+
+SELECT
+  SUM(t.total_payment) INTO total
+FROM
+  transaction t
+WHERE
+  t.total_payment = NEW.total_payment;
+
+UPDATE
+  checkout
+SET
+  total_payment = total
+WHERE
+  total_payment = NEW.total_payment;
+
+END $ $ DELIMITER;
+
 -- --------------------------------------------------------
 --
 -- Table structure for table `roles`
 --
 CREATE TABLE `roles` (
-  `id_role` int NOT NULL,
+  `id_role` int(11) NOT NULL,
   `name` varchar(50) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
@@ -493,9 +545,9 @@ VALUES
 -- Table structure for table `transactions`
 --
 CREATE TABLE `transactions` (
-  `id_transaction` int NOT NULL,
-  `voucher_id` int NOT NULL,
-  `user_id` int NOT NULL,
+  `id_transaction` int(11) NOT NULL,
+  `voucher_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `timestamp` timestamp NULL DEFAULT NULL,
   `riotId` varchar(50) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
@@ -513,16 +565,17 @@ INSERT INTO
   )
 VALUES
   (1, 4, 1, NULL, 'Cerberus#X3M'),
-  (2, 4, 2, NULL, 'asdad');
+  (2, 4, 2, NULL, 'asdad'),
+  (3, 3, 3, NULL, 'lalala#lol1');
 
 -- --------------------------------------------------------
 --
 -- Table structure for table `users`
 --
 CREATE TABLE `users` (
-  `id_user` int NOT NULL,
+  `id_user` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `role_id` int NOT NULL,
+  `role_id` int(11) NOT NULL,
   `email` varchar(30) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(100) NOT NULL
@@ -556,14 +609,15 @@ VALUES
     'daffa@gmail.com',
     'daffa',
     'daffa123'
-  );
+  ),
+  (3, 'cakcuk', 1, 'ucok@gmail.com', 'cuk', 'cak');
 
 -- --------------------------------------------------------
 --
 -- Table structure for table `virtual_account`
 --
 CREATE TABLE `virtual_account` (
-  `id_virtual_account` int NOT NULL,
+  `id_virtual_account` int(11) NOT NULL,
   `name` varchar(25) NOT NULL,
   `number` varchar(25) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
@@ -575,15 +629,16 @@ INSERT INTO
   `virtual_account` (`id_virtual_account`, `name`, `number`)
 VALUES
   (1, 'daffa', '1254421'),
-  (2, 'fauzi', '2203156');
+  (2, 'fauzi', '2203156'),
+  (3, 'cakcukcok', '33655488512');
 
 -- --------------------------------------------------------
 --
 -- Table structure for table `vouchers`
 --
 CREATE TABLE `vouchers` (
-  `id_voucher` int NOT NULL,
-  `amount` int NOT NULL,
+  `id_voucher` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
   `price` float NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
@@ -593,8 +648,9 @@ CREATE TABLE `vouchers` (
 INSERT INTO
   `vouchers` (`id_voucher`, `amount`, `price`)
 VALUES
-  (4, 2000, 20000),
-  (5, 3000, 350000);
+  (3, 9, 300000),
+  (4, 5, 120000),
+  (5, 21, 1000000);
 
 --
 -- Indexes for dumped tables
@@ -674,7 +730,7 @@ ADD
 ALTER TABLE
   `banks`
 MODIFY
-  `id_bank` int NOT NULL AUTO_INCREMENT,
+  `id_bank` int(11) NOT NULL AUTO_INCREMENT,
   AUTO_INCREMENT = 4;
 
 --
@@ -683,8 +739,8 @@ MODIFY
 ALTER TABLE
   `checkout`
 MODIFY
-  `id_checkout` int NOT NULL AUTO_INCREMENT,
-  AUTO_INCREMENT = 3;
+  `id_checkout` int(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 4;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -692,7 +748,7 @@ MODIFY
 ALTER TABLE
   `roles`
 MODIFY
-  `id_role` int NOT NULL AUTO_INCREMENT,
+  `id_role` int(11) NOT NULL AUTO_INCREMENT,
   AUTO_INCREMENT = 3;
 
 --
@@ -701,8 +757,8 @@ MODIFY
 ALTER TABLE
   `transactions`
 MODIFY
-  `id_transaction` int NOT NULL AUTO_INCREMENT,
-  AUTO_INCREMENT = 3;
+  `id_transaction` int(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 4;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -710,8 +766,8 @@ MODIFY
 ALTER TABLE
   `users`
 MODIFY
-  `id_user` int NOT NULL AUTO_INCREMENT,
-  AUTO_INCREMENT = 3;
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 4;
 
 --
 -- AUTO_INCREMENT for table `virtual_account`
@@ -719,8 +775,8 @@ MODIFY
 ALTER TABLE
   `virtual_account`
 MODIFY
-  `id_virtual_account` int NOT NULL AUTO_INCREMENT,
-  AUTO_INCREMENT = 3;
+  `id_virtual_account` int(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 4;
 
 --
 -- AUTO_INCREMENT for table `vouchers`
@@ -728,7 +784,7 @@ MODIFY
 ALTER TABLE
   `vouchers`
 MODIFY
-  `id_voucher` int NOT NULL AUTO_INCREMENT,
+  `id_voucher` int(11) NOT NULL AUTO_INCREMENT,
   AUTO_INCREMENT = 6;
 
 --
@@ -764,9 +820,11 @@ ADD
 
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */
+;
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `login`(IN `uname` VARCHAR(50))
-SELECT * FROM users WHERE username = uname$$
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */
+;
+
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */
+;
