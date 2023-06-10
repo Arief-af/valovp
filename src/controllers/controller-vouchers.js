@@ -41,7 +41,7 @@ module.exports ={
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data voucher with ${req.body.id_voucher} has been created`,
+                    message: `Data voucher with ${uuid} has been created`,
                     data: results 
                 });
             });
