@@ -25,11 +25,11 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_create` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(75))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `bank_create` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(75))   BEGIN
 	insert INTO banks(id_bank, name) VALUES(id_bank, name);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_delete` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `bank_delete` (IN `id` INT(25))   BEGIN
     	   DECLARE affected_rows INT;
 
      	   DELETE FROM banks WHERE id_bank = id;
@@ -40,27 +40,27 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_delete` (IN `id` INT(25))   BE
     	   END IF;
  END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_edit` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `bank_edit` (IN `id` INT(25))   BEGIN
 	   SELECT * from banks where id_bank = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_read` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `bank_read` ()   BEGIN
 	   SELECT * FROM banks;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_update` (IN `id` INT(25), IN `name` VARCHAR(75))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `bank_update` (IN `id` INT(25), IN `name` VARCHAR(75))   BEGIN
  UPDATE banks SET name = name WHERE id_bank = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `change_status` (IN `id` INT(25), IN `status` ENUM('pending','success',' failed'))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `change_status` (IN `id` INT(25), IN `status` ENUM('pending','success',' failed'))   BEGIN
 	UPDATE checkout set status = status WHERE id_checkout = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `checkout_create` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `virtual_account_id` INT(25), IN `transaction_id` INT(25), IN `total_payment` FLOAT, IN `status` ENUM('pending','success',' failed'))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkout_create` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `virtual_account_id` INT(25), IN `transaction_id` INT(25), IN `total_payment` FLOAT, IN `status` ENUM('pending','success',' failed'))   BEGIN
 	   insert INTO checkout(id_checkout, virtual_account_id, transaction_id, total_payment, status) VALUES(id, 											virtual_account_id, transaction_id, total_payment, status);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `checkout_delete` (IN `id` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkout_delete` (IN `id` INT)   BEGIN
     	   DECLARE affected_rows INT;
 
      	   DELETE FROM checkout WHERE id_checkout = id;
@@ -71,19 +71,19 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `checkout_delete` (IN `id` INT)   BE
     	   END IF;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `checkout_read` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkout_read` ()   BEGIN
 	   SELECT * FROM checkout;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `checkout_update` (IN `id` INT(25), IN `va_id` INT(25), IN `trans_id` INT(25), IN `total_payment` FLOAT, IN `status` ENUM('pending','success',' failed'))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkout_update` (IN `id` INT(25), IN `va_id` INT(25), IN `trans_id` INT(25), IN `total_payment` FLOAT, IN `status` ENUM('pending','success',' failed'))   BEGIN
 	   UPDATE checkout SET virtual_account_id = va_id, transaction_id = trans_id, total_payment = total_payment, status = 		   status WHERE id_checkout = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_create` (IN `id_role` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(50))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_create` (IN `id_role` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(50))   BEGIN
 insert INTO roles(id_role, name) VALUES(id_role, name);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_delete` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_delete` (IN `id` INT(25))   BEGIN
     DECLARE affected_rows INT;
 
     DELETE FROM roles WHERE id_role = id;
@@ -94,23 +94,23 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_delete` (IN `id` INT(25))   BE
     END IF;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_edit` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_edit` (IN `id` INT(25))   BEGIN
 SELECT * from roles where id_role = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_read` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_read` ()   BEGIN
 SELECT * FROM roles;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_update` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(50))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_update` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(50))   BEGIN
 UPDATE roles SET name = name WHERE id_role = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `transaction_create` (IN `id_transaction` INT(25) UNSIGNED ZEROFILL, IN `voucher_id` INT(25), IN `user_id` INT(25), IN `riotId` VARCHAR(50))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_create` (IN `id_transaction` INT(25) UNSIGNED ZEROFILL, IN `voucher_id` INT(25), IN `user_id` INT(25), IN `riotId` VARCHAR(50))   BEGIN
 	   insert INTO transactions(id_transaction, voucher_id, user_id, riotId) VALUES(id_transaction, voucher_id, user_id, 									riotId);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `transaction_delete` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_delete` (IN `id` INT(25))   BEGIN
     	   DECLARE affected_rows INT;
 
      	   DELETE FROM transactions WHERE id_transaction = id;
@@ -121,19 +121,19 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `transaction_delete` (IN `id` INT(25
     	   END IF;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `transaction_read` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_read` ()   BEGIN
 	   SELECT * FROM transactions;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `transaction_update` (IN `id` INT(25), IN `vcr_id` INT(25), IN `usr_id` INT(25), IN `riotId` VARCHAR(50))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_update` (IN `id` INT(25), IN `vcr_id` INT(25), IN `usr_id` INT(25), IN `riotId` VARCHAR(50))   BEGIN
 	   UPDATE transactions SET voucher_id = vcr_id, user_id = usr_id WHERE id_transaction = id;
 	   END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_create` (IN `id_user` INT(25) UNSIGNED ZEROFILL, IN `role_id` INT(25), IN `email` VARCHAR(30), IN `username` VARCHAR(30), IN `password` VARCHAR(50))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `user_create` (IN `id_user` INT(25) UNSIGNED ZEROFILL, IN `role_id` INT(25), IN `email` VARCHAR(30), IN `username` VARCHAR(30), IN `password` VARCHAR(50))   BEGIN
  insert INTO users(id_user, role_id, email, username, password) VALUES(id_user, role_id, email, username, password);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_delete` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `user_delete` (IN `id` INT(25))   BEGIN
     	   DECLARE affected_rows INT;
 
      	   DELETE FROM users WHERE id_user = id;
@@ -144,23 +144,23 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_delete` (IN `id` INT(25))   BE
     	   END IF;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_edit` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `user_edit` (IN `id` INT(25))   BEGIN
 	   SELECT * from users where id_user = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_read` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `user_read` ()   BEGIN
  SELECT * FROM users;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_update` (IN `id` INT(25), IN `role_id` INT(25), IN `email` VARCHAR(30), IN `username` VARCHAR(30), IN `password` VARCHAR(50))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `user_update` (IN `id` INT(25), IN `role_id` INT(25), IN `email` VARCHAR(30), IN `username` VARCHAR(30), IN `password` VARCHAR(50))   BEGIN
  UPDATE users SET role_id = role_id, email = email, username = username, password = password  WHERE id_user = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_create` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(25), IN `number` VARCHAR(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `virtual_account_create` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `name` VARCHAR(25), IN `number` VARCHAR(25))   BEGIN
    insert INTO virtual_account(id_virtual_account, name, number) VALUES(id, name, number);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_delete` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `virtual_account_delete` (IN `id` INT(25))   BEGIN
     	  DECLARE affected_rows INT;
 
      	  DELETE FROM virtual_account WHERE id_virtual_account = id;
@@ -171,23 +171,23 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_delete` (IN `id` IN
     	  END IF;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_edit` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `virtual_account_edit` (IN `id` INT(25))   BEGIN
 	   SELECT * from virtual_account WHERE id_virtual_account = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_read` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `virtual_account_read` ()   BEGIN
 	   SELECT * FROM virtual_account;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_update` (IN `id` INT(25), IN `name` VARCHAR(25), IN `number` VARCHAR(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `virtual_account_update` (IN `id` INT(25), IN `name` VARCHAR(25), IN `number` VARCHAR(25))   BEGIN
 	   UPDATE virtual_account SET name = name, number = number WHERE id_virtual_account = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `voucher_create` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `amount` INT(4), IN `price` FLOAT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `voucher_create` (IN `id` INT(25) UNSIGNED ZEROFILL, IN `amount` INT(4), IN `price` FLOAT)   BEGIN
 insert INTO vouchers(id_voucher, amount, price) VALUES(id, amount, price);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `voucher_delete` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `voucher_delete` (IN `id` INT(25))   BEGIN
 DECLARE affected_rows INT;
 
 DELETE FROM vouchers WHERE id_voucher = id;
@@ -198,15 +198,15 @@ SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The provided ID does not exist.';
 	END if;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `voucher_edit` (IN `id` INT(25))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `voucher_edit` (IN `id` INT(25))   BEGIN
 	   SELECT * from vouchers where id_voucher = id;
  END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `voucher_read` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `voucher_read` ()   BEGIN
    SELECT * FROM vouchers;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `voucher_update` (IN `id` INT(25), IN `amount` INT(4), IN `price` FLOAT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `voucher_update` (IN `id` INT(25), IN `amount` INT(4), IN `price` FLOAT)   BEGIN
 	UPDATE vouchers SET amount = amount, price = price WHERE id_voucher = id;
 END$$
 
@@ -483,6 +483,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `login`(IN `uname` VARCHAR(50))
-SELECT * FROM users WHERE username = uname$$
