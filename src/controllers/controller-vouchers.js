@@ -89,13 +89,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call voucher_edit('${req.body.id_voucher}');
+               call voucher_edit('${req.query.id_voucher}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting voucher Data with id ${req.body.id_voucher}`,
+                    message: `Collecting voucher Data with id ${req.query.id_voucher}`,
                     data: results 
                 });
             });

@@ -89,13 +89,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call user_edit('${req.body.id_user}');
+               call user_edit('${req.query.id_user}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting user Data with id ${req.body.id_user}`,
+                    message: `Collecting user Data with id ${req.query.id_user}`,
                     data: results 
                 });
             });

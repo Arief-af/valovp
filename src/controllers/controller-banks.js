@@ -95,7 +95,7 @@ module.exports ={
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting bank Data with id ${req.body.id_bank}`,
+                    message: `Collecting bank Data with id ${req.query.id_bank}`,
                     data: results 
                 });
             });

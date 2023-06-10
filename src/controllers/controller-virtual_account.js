@@ -89,13 +89,13 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call virtual_account_edit('${req.body.id_virtual_account}');
+               call virtual_account_edit('${req.query.id_virtual_account}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Collecting virtual_account Data with id ${req.body.id_virtual_account}`,
+                    message: `Collecting virtual_account Data with id ${req.query.id_virtual_account}`,
                     data: results 
                 });
             });
