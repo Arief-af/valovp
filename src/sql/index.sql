@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 10, 2023 at 05:48 PM
+-- Generation Time: Jun 10, 2023 at 07:42 PM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.11
 SET
@@ -32,16 +32,13 @@ SET
 DELIMITER $ $ --
 -- Procedures
 --
-CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_create` (
-    IN `id` INT(36) UNSIGNED ZEROFILL,
-    IN `name` VARCHAR(75)
-) BEGIN
+CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_create` (IN `id` VARCHAR(36), IN `name` VARCHAR(75)) BEGIN
 insert INTO
     banks(id_bank, name)
 VALUES
 (id_bank, name);
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_delete` (IN `id` INT(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     banks
@@ -57,7 +54,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_edit` (IN `id` INT(36)) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_edit` (IN `id` VARCHAR(36)) BEGIN
 SELECT
     *
 from
@@ -71,7 +68,7 @@ SELECT
 FROM
     banks;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_update` (IN `id` INT(36), IN `name` VARCHAR(75)) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(75)) BEGIN
 UPDATE
     banks
 SET
@@ -80,7 +77,7 @@ WHERE
     id_bank = id;
 
 END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `change_status` (
-    IN `id` INT(36),
+    IN `id` VARCHAR(36),
     IN `status` ENUM('pending', 'success', ' failed')
 ) BEGIN
 UPDATE
@@ -91,9 +88,9 @@ WHERE
     id_checkout = id;
 
 END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_create` (
-    IN `id` INT(36) UNSIGNED ZEROFILL,
-    IN `virtual_account_id` INT(36),
-    IN `transaction_id` INT(36),
+    IN `id` VARCHAR(36),
+    IN `virtual_account_id` VARCHAR(36),
+    IN `transaction_id` VARCHAR(36),
     IN `total_payment` FLOAT,
     IN `status` ENUM('pending', 'success', ' failed')
 ) BEGIN
@@ -114,7 +111,7 @@ VALUES
         status
     );
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_delete` (IN `id` INT(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     checkout
@@ -145,9 +142,9 @@ FROM
     JOIN virtual_account ON checkout.virtual_account_id = virtual_account.id_virtual_account;
 
 END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_update` (
-    IN `id` INT(36),
-    IN `va_id` INT(36),
-    IN `trans_id` INT(36),
+    IN `id` VARCHAR(36),
+    IN `va_id` VARCHAR(36),
+    IN `trans_id` VARCHAR(36),
     IN `total_payment` FLOAT,
     IN `status` ENUM('pending', 'success', ' failed')
 ) BEGIN
@@ -161,16 +158,13 @@ SET
 WHERE
     id_checkout = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_create` (
-    IN `id_role` INT(36) UNSIGNED ZEROFILL,
-    IN `name` VARCHAR(50)
-) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_create` (IN `id_role` VARCHAR(36), IN `name` VARCHAR(50)) BEGIN
 insert INTO
     roles(id_role, name)
 VALUES
 (id_role, name);
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_delete` (IN `id` INT(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     roles
@@ -186,7 +180,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_edit` (IN `id` INT(25)) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_edit` (IN `id` VARCHAR(25)) BEGIN
 SELECT
     *
 from
@@ -200,10 +194,7 @@ SELECT
 FROM
     roles;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_update` (
-    IN `id` INT(36) UNSIGNED ZEROFILL,
-    IN `name` VARCHAR(50)
-) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(50)) BEGIN
 UPDATE
     roles
 SET
@@ -212,9 +203,9 @@ WHERE
     id_role = id;
 
 END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_create` (
-    IN `id_transaction` INT(36) UNSIGNED ZEROFILL,
-    IN `voucher_id` INT(36),
-    IN `user_id` INT(36),
+    IN `id_transaction` VARCHAR(36),
+    IN `voucher_id` VARCHAR(36),
+    IN `user_id` VARCHAR(36),
     IN `riotId` VARCHAR(50)
 ) BEGIN
 insert INTO
@@ -222,7 +213,7 @@ insert INTO
 VALUES
 (id_transaction, voucher_id, user_id, riotId);
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_delete` (IN `id` INT(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     transactions
@@ -250,7 +241,7 @@ FROM
     JOIN users ON transactions.user_id = users.id_user;
 
 END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_update` (
-    IN `id` INT(36),
+    IN `id` VARCHAR(36),
     IN `vcr_id` INT(36),
     IN `usr_id` INT(36),
     IN `riotId` VARCHAR(50)
@@ -264,8 +255,8 @@ WHERE
     id_transaction = id;
 
 END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_create` (
-    IN `id_user` INT(36) UNSIGNED ZEROFILL,
-    IN `role_id` INT(36),
+    IN `id_user` VARCHAR(36),
+    IN `role_id` VARCHAR(36),
     IN `email` VARCHAR(30),
     IN `username` VARCHAR(30),
     IN `password` VARCHAR(50),
@@ -290,7 +281,7 @@ VALUES
         name
     );
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_delete` (IN `id` INT(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     users
@@ -306,7 +297,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_edit` (IN `id` INT(25)) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_edit` (IN `id` VARCHAR(25)) BEGIN
 SELECT
     *
 from
@@ -326,8 +317,8 @@ FROM
     JOIN roles ON users.role_id = roles.id_role;
 
 END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_update` (
-    IN `id` INT(36),
-    IN `role_id` INT(36),
+    IN `id` VARCHAR(36),
+    IN `role_id` VARCHAR(36),
     IN `email` VARCHAR(30),
     IN `username` VARCHAR(30),
     IN `password` VARCHAR(50)
@@ -343,7 +334,7 @@ WHERE
     id_user = id;
 
 END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_create` (
-    IN `id` INT(36) UNSIGNED ZEROFILL,
+    IN `id` VARCHAR(36),
     IN `name` VARCHAR(25),
     IN `number` VARCHAR(25)
 ) BEGIN
@@ -352,7 +343,7 @@ insert INTO
 VALUES
 (id, name, number);
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_delete` (IN `id` INT(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     virtual_account
@@ -368,7 +359,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_edit` (IN `id` INT(25)) BEGIN
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_edit` (IN `id` VARCHAR(25)) BEGIN
 SELECT
     *
 from
@@ -383,7 +374,7 @@ FROM
     virtual_account;
 
 END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_update` (
-    IN `id` INT(36),
+    IN `id` VARCHAR(36),
     IN `name` VARCHAR(25),
     IN `number` VARCHAR(25)
 ) BEGIN
@@ -396,7 +387,7 @@ WHERE
     id_virtual_account = id;
 
 END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_create` (
-    IN `id` INT(36) UNSIGNED ZEROFILL,
+    IN `id` VARCHAR(36),
     IN `amount` INT(4),
     IN `price` FLOAT
 ) BEGIN
@@ -405,7 +396,7 @@ insert INTO
 VALUES
 (id, amount, price);
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_delete` (IN `id` INT(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     vouchers
@@ -436,7 +427,7 @@ FROM
     vouchers;
 
 END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_update` (
-    IN `id` INT(36),
+    IN `id` VARCHAR(36),
     IN `amount` INT(4),
     IN `price` FLOAT
 ) BEGIN
@@ -455,7 +446,7 @@ END $ $ DELIMITER;
 -- Table structure for table `banks`
 --
 CREATE TABLE `banks` (
-    `id_bank` int(36) NOT NULL,
+    `id_bank` bigint(36) NOT NULL,
     `name` varchar(75) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
@@ -474,9 +465,9 @@ VALUES
 -- Table structure for table `checkout`
 --
 CREATE TABLE `checkout` (
-    `id_checkout` int(36) NOT NULL,
-    `virtual_account_id` int(36) NOT NULL,
-    `transaction_id` int(36) NOT NULL,
+    `id_checkout` varchar(36) NOT NULL,
+    `virtual_account_id` varchar(36) NOT NULL,
+    `transaction_id` varchar(36) NOT NULL,
     `total_payment` float NOT NULL,
     `status` enum('pending', 'success', ' failed') NOT NULL,
     `timestamp` timestamp NULL DEFAULT NULL
@@ -495,15 +486,15 @@ INSERT INTO
         `timestamp`
     )
 VALUES
-    (1, 2, 1, 350000, 'pending', NULL),
-    (2, 1, 2, 350000, 'success', NULL);
+    ('1', '2', '1', 350000, 'pending', NULL),
+    ('2', '1', '2', 350000, 'success', NULL);
 
 -- --------------------------------------------------------
 --
 -- Table structure for table `roles`
 --
 CREATE TABLE `roles` (
-    `id_role` int(36) NOT NULL,
+    `id_role` varchar(36) NOT NULL,
     `name` varchar(50) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
@@ -513,18 +504,18 @@ CREATE TABLE `roles` (
 INSERT INTO
     `roles` (`id_role`, `name`)
 VALUES
-    (1, 'user'),
-    (2, 'admin'),
-    (3, 'ucok');
+    ('1', 'user'),
+    ('2', 'admin'),
+    ('3', 'ucok');
 
 -- --------------------------------------------------------
 --
 -- Table structure for table `transactions`
 --
 CREATE TABLE `transactions` (
-    `id_transaction` int(36) NOT NULL,
-    `voucher_id` int(36) NOT NULL,
-    `user_id` int(36) NOT NULL,
+    `id_transaction` varchar(36) NOT NULL,
+    `voucher_id` varchar(36) NOT NULL,
+    `user_id` varchar(36) NOT NULL,
     `timestamp` timestamp NULL DEFAULT NULL,
     `riotId` varchar(50) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
@@ -541,18 +532,18 @@ INSERT INTO
         `riotId`
     )
 VALUES
-    (1, 4, 1, NULL, 'Cerberus#X3M'),
-    (2, 4, 2, NULL, 'asdad'),
-    (3, 3, 3, NULL, 'lalala#lol1');
+    ('1', '4', '1', NULL, 'Cerberus#X3M'),
+    ('2', '4', '2', NULL, 'asdad'),
+    ('3', '3', '3', NULL, 'lalala#lol1');
 
 -- --------------------------------------------------------
 --
 -- Table structure for table `users`
 --
 CREATE TABLE `users` (
-    `id_user` int(36) NOT NULL,
+    `id_user` varchar(36) NOT NULL,
     `name` varchar(100) NOT NULL,
-    `role_id` int(36) NOT NULL,
+    `role_id` varchar(36) NOT NULL,
     `email` varchar(30) NOT NULL,
     `username` varchar(30) NOT NULL,
     `password` varchar(100) NOT NULL
@@ -572,29 +563,36 @@ INSERT INTO
     )
 VALUES
     (
-        1,
+        '1',
         'udin semewew',
-        1,
+        '1',
         'kldadaad@gmail.com',
         'kalo',
         'manadawdaw'
     ),
     (
-        2,
+        '2',
         'jamaludin',
-        1,
+        '1',
         'daffa@gmail.com',
         'daffa',
         'daffa123'
     ),
-    (3, 'cakcuk', 1, 'ucok@gmail.com', 'cuk', 'cak');
+    (
+        '3',
+        'cakcuk',
+        '1',
+        'ucok@gmail.com',
+        'cuk',
+        'cak'
+    );
 
 -- --------------------------------------------------------
 --
 -- Table structure for table `virtual_account`
 --
 CREATE TABLE `virtual_account` (
-    `id_virtual_account` int(36) NOT NULL,
+    `id_virtual_account` varchar(36) NOT NULL,
     `name` varchar(25) NOT NULL,
     `number` varchar(25) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
@@ -605,16 +603,16 @@ CREATE TABLE `virtual_account` (
 INSERT INTO
     `virtual_account` (`id_virtual_account`, `name`, `number`)
 VALUES
-    (1, 'daffa', '1254421'),
-    (2, 'fauzi', '2203156'),
-    (3, 'cakcukcok', '33655488512');
+    ('1', 'daffa', '1254421'),
+    ('2', 'fauzi', '2203156'),
+    ('3', 'cakcukcok', '33655488512');
 
 -- --------------------------------------------------------
 --
 -- Table structure for table `vouchers`
 --
 CREATE TABLE `vouchers` (
-    `id_voucher` int(36) NOT NULL,
+    `id_voucher` varchar(36) NOT NULL,
     `amount` int(11) NOT NULL,
     `price` float NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
@@ -625,9 +623,9 @@ CREATE TABLE `vouchers` (
 INSERT INTO
     `vouchers` (`id_voucher`, `amount`, `price`)
 VALUES
-    (3, 9, 300000),
-    (4, 5, 120000),
-    (5, 21, 1000000);
+    ('3', 9, 300000),
+    ('4', 5, 120000),
+    ('5', 21, 1000000);
 
 --
 -- Indexes for dumped tables
@@ -707,62 +705,8 @@ ADD
 ALTER TABLE
     `banks`
 MODIFY
-    `id_bank` int(36) NOT NULL AUTO_INCREMENT,
+    `id_bank` bigint(36) NOT NULL AUTO_INCREMENT,
     AUTO_INCREMENT = 4;
-
---
--- AUTO_INCREMENT for table `checkout`
---
-ALTER TABLE
-    `checkout`
-MODIFY
-    `id_checkout` int(36) NOT NULL AUTO_INCREMENT,
-    AUTO_INCREMENT = 4;
-
---
--- AUTO_INCREMENT for table `roles`
---
-ALTER TABLE
-    `roles`
-MODIFY
-    `id_role` int(36) NOT NULL AUTO_INCREMENT,
-    AUTO_INCREMENT = 4;
-
---
--- AUTO_INCREMENT for table `transactions`
---
-ALTER TABLE
-    `transactions`
-MODIFY
-    `id_transaction` int(36) NOT NULL AUTO_INCREMENT,
-    AUTO_INCREMENT = 4;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE
-    `users`
-MODIFY
-    `id_user` int(36) NOT NULL AUTO_INCREMENT,
-    AUTO_INCREMENT = 4;
-
---
--- AUTO_INCREMENT for table `virtual_account`
---
-ALTER TABLE
-    `virtual_account`
-MODIFY
-    `id_virtual_account` int(36) NOT NULL AUTO_INCREMENT,
-    AUTO_INCREMENT = 4;
-
---
--- AUTO_INCREMENT for table `vouchers`
---
-ALTER TABLE
-    `vouchers`
-MODIFY
-    `id_voucher` int(36) NOT NULL AUTO_INCREMENT,
-    AUTO_INCREMENT = 6;
 
 --
 -- Constraints for dumped tables
@@ -783,9 +727,9 @@ ADD
 ALTER TABLE
     `transactions`
 ADD
-    CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id_voucher`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD
-    CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+    CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id_voucher`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users`
