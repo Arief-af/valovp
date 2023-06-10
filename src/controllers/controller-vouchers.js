@@ -1,6 +1,7 @@
 const config = require('../configs/database');
 const mysql = require('mysql2');
 const pool = mysql.createPool(config);
+const { v4: uuidv4 } = require('uuid');
 
 pool.on('error',(err)=> {
     console.error(err);
@@ -28,11 +29,13 @@ module.exports ={
     },
 
     createDataVouchers(req,res){
+        const id = uuidv4();
+        console.log(req.body);
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
                 `
-               call voucher_create('${req.body.id_voucher}', '${req.body.amount}', '${req.body.price}');
+               call voucher_create('${id}', '${req.body.amount}', '${req.body.price}');
                 `
             , function (error, results) {
                 if(error) throw error;  
