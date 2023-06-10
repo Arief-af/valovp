@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 10, 2023 at 11:53 AM
+-- Generation Time: Jun 10, 2023 at 12:45 PM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.11
 SET
@@ -497,30 +497,6 @@ INSERT INTO
 VALUES
   (1, 2, 1, 350000, 'pending', NULL),
   (2, 1, 2, 350000, 'success', NULL);
-
---
--- Triggers `checkout`
---
-DELIMITER $ $ CREATE TRIGGER `checkout_after_total_payment`
-AFTER
-INSERT
-  ON `checkout` FOR EACH ROW BEGIN DECLARE total DECIMAL(10, 2);
-
-SELECT
-  SUM(t.total_payment) INTO total
-FROM
-  transaction t
-WHERE
-  t.total_payment = NEW.total_payment;
-
-UPDATE
-  checkout
-SET
-  total_payment = total
-WHERE
-  total_payment = NEW.total_payment;
-
-END $ $ DELIMITER;
 
 -- --------------------------------------------------------
 --
