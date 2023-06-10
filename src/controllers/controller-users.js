@@ -1,6 +1,8 @@
 const config = require('../configs/database');
 const mysql = require('mysql2');
 const pool = mysql.createPool(config);
+const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require("uuid");
 
 pool.on('error',(err)=> {
     console.error(err);
@@ -29,16 +31,18 @@ module.exports ={
 
     createDataUser(req,res){
         pool.getConnection(function(err, connection) {
+            const uuid = uuidv4();
+            const hashedPassword = bcrypt.hash(req.body.password, 10);
             if (err) throw err;
             connection.query(
                 `
-               call user_create('${req.body.id_user}', '${req.body.role_id}', '${req.body.email}', '${req.body.username}', '${req.body.password}');
+               call user_create('${uuid}', '${req.body.role_id}', '${req.body.email}', '${req.body.username}', '${hashedPassword}', '${req.body.name}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data user with ${req.body.id_user} has been created`,
+                    message: `Data user with ${uuid} has been created`,
                     data: results 
                 });
             });

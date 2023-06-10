@@ -51,7 +51,7 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call bank_delete('${id_bank}');
+               call bank_delete('${req.body.id_bank}');
                 `
             , function (error, results) {
                 if(error) throw error;  

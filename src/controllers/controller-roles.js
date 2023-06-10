@@ -1,6 +1,7 @@
 const config = require("../configs/database");
 const mysql = require("mysql2");
 const pool = mysql.createPool(config);
+const { v4: uuidv4 } = require("uuid");
 
 pool.on("error", (err) => {
   console.error(err);
@@ -59,7 +60,7 @@ module.exports = {
           if (error) throw error;
           res.send({
             success: true,
-            message: `Data role with ${req.body.id_role} has been updated`,
+            message: `Data role with ID : ${req.body.id_role} has been updated`,
             data: results,
           });
         }
@@ -71,15 +72,16 @@ module.exports = {
   createDataRole(req, res) {
     pool.getConnection(function (err, connection) {
       if (err) throw err;
+      const uuid = uuidv4();
       connection.query(
         `
-                call role_create('${req.body.id_role}', '${req.body.name}');
+                call role_create('${uuid}', '${req.body.name}');
                 `,
         function (error, results) {
           if (error) throw error;
           res.send({
             success: true,
-            message: `Data role with ${req.body.id_role} has been created`,
+            message: `Data role with ${uuid} has been created`,
             data: results,
           });
         }
@@ -89,7 +91,6 @@ module.exports = {
   },
 
   editDataRole(req, res) {
-    console.log(req);
     pool.getConnection(function (err, connection) {
       if (err) {
         throw err;

@@ -29,16 +29,15 @@ SET
 --
 -- Database: `vpvalorant`
 --
-DELIMITER $ $ --
 -- Procedures
 --
-CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_create` (IN `id` VARCHAR(36), IN `name` VARCHAR(75)) BEGIN
+CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `bank_create` (IN `id` VARCHAR(36), IN `name` VARCHAR(75)) BEGIN
 insert INTO
     banks(id_bank, name)
 VALUES
 (id_bank, name);
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `bank_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     banks
@@ -54,7 +53,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_edit` (IN `id` VARCHAR(36)) BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `bank_edit` (IN `id` VARCHAR(36)) BEGIN
 SELECT
     *
 from
@@ -62,13 +61,13 @@ from
 where
     id_bank = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_read` () BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `bank_read` () BEGIN
 SELECT
     *
 FROM
     banks;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `bank_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(75)) BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `bank_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(75)) BEGIN
 UPDATE
     banks
 SET
@@ -76,7 +75,7 @@ SET
 WHERE
     id_bank = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `change_status` (
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `change_status` (
     IN `id` VARCHAR(36),
     IN `status` ENUM('pending', 'success', ' failed')
 ) BEGIN
@@ -87,7 +86,7 @@ set
 WHERE
     id_checkout = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_create` (
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `checkout_create` (
     IN `id` VARCHAR(36),
     IN `virtual_account_id` VARCHAR(36),
     IN `transaction_id` VARCHAR(36),
@@ -111,7 +110,7 @@ VALUES
         status
     );
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `checkout_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     checkout
@@ -127,7 +126,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_read` () BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `checkout_read` () BEGIN
 SELECT
     checkout.id_checkout,
     transactions.riotId,
@@ -141,7 +140,7 @@ FROM
     JOIN transactions ON checkout.transaction_id = transactions.id_transaction
     JOIN virtual_account ON checkout.virtual_account_id = virtual_account.id_virtual_account;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `checkout_update` (
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `checkout_update` (
     IN `id` VARCHAR(36),
     IN `va_id` VARCHAR(36),
     IN `trans_id` VARCHAR(36),
@@ -158,13 +157,13 @@ SET
 WHERE
     id_checkout = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_create` (IN `id_role` VARCHAR(36), IN `name` VARCHAR(50)) BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `role_create` (IN `id_role` VARCHAR(36), IN `name` VARCHAR(50)) BEGIN
 insert INTO
     roles(id_role, name)
 VALUES
 (id_role, name);
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `role_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     roles
@@ -180,7 +179,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_edit` (IN `id` VARCHAR(25)) BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `role_edit` (IN `id` VARCHAR(25)) BEGIN
 SELECT
     *
 from
@@ -188,13 +187,13 @@ from
 where
     id_role = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_read` () BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `role_read` () BEGIN
 SELECT
     *
 FROM
     roles;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `role_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(50)) BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `role_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(50)) BEGIN
 UPDATE
     roles
 SET
@@ -202,7 +201,7 @@ SET
 WHERE
     id_role = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_create` (
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `transaction_create` (
     IN `id_transaction` VARCHAR(36),
     IN `voucher_id` VARCHAR(36),
     IN `user_id` VARCHAR(36),
@@ -213,7 +212,7 @@ insert INTO
 VALUES
 (id_transaction, voucher_id, user_id, riotId);
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `transaction_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     transactions
@@ -229,7 +228,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_read` () BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `transaction_read` () BEGIN
 SELECT
     transactions.id_transaction,
     users.username,
@@ -240,7 +239,7 @@ FROM
     JOIN vouchers ON transactions.voucher_id = vouchers.id_voucher
     JOIN users ON transactions.user_id = users.id_user;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `transaction_update` (
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `transaction_update` (
     IN `id` VARCHAR(36),
     IN `vcr_id` INT(36),
     IN `usr_id` INT(36),
@@ -254,7 +253,7 @@ SET
 WHERE
     id_transaction = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_create` (
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `user_create` (
     IN `id_user` VARCHAR(36),
     IN `role_id` VARCHAR(36),
     IN `email` VARCHAR(30),
@@ -281,7 +280,7 @@ VALUES
         name
     );
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `user_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     users
@@ -297,7 +296,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_edit` (IN `id` VARCHAR(25)) BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `user_edit` (IN `id` VARCHAR(25)) BEGIN
 SELECT
     *
 from
@@ -305,7 +304,7 @@ from
 where
     id_user = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_read` () BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `user_read` () BEGIN
 SELECT
     users.name,
     users.username,
@@ -316,7 +315,7 @@ FROM
     users
     JOIN roles ON users.role_id = roles.id_role;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `user_update` (
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `user_update` (
     IN `id` VARCHAR(36),
     IN `role_id` VARCHAR(36),
     IN `email` VARCHAR(30),
@@ -333,7 +332,7 @@ SET
 WHERE
     id_user = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_create` (
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `virtual_account_create` (
     IN `id` VARCHAR(36),
     IN `name` VARCHAR(25),
     IN `number` VARCHAR(25)
@@ -343,7 +342,7 @@ insert INTO
 VALUES
 (id, name, number);
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `virtual_account_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     virtual_account
@@ -359,7 +358,7 @@ SET
 
 END IF;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_edit` (IN `id` VARCHAR(25)) BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `virtual_account_edit` (IN `id` VARCHAR(25)) BEGIN
 SELECT
     *
 from
@@ -367,13 +366,13 @@ from
 WHERE
     id_virtual_account = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_read` () BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `virtual_account_read` () BEGIN
 SELECT
     *
 FROM
     virtual_account;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `virtual_account_update` (
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `virtual_account_update` (
     IN `id` VARCHAR(36),
     IN `name` VARCHAR(25),
     IN `number` VARCHAR(25)
@@ -386,7 +385,7 @@ SET
 WHERE
     id_virtual_account = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_create` (
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `voucher_create` (
     IN `id` VARCHAR(36),
     IN `amount` INT(4),
     IN `price` FLOAT
@@ -396,7 +395,7 @@ insert INTO
 VALUES
 (id, amount, price);
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `voucher_delete` (IN `id` VARCHAR(36)) BEGIN DECLARE affected_rows INT;
 
 DELETE FROM
     vouchers
@@ -412,7 +411,7 @@ SET
 
 END if;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_edit` (IN `id` INT(25)) BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `voucher_edit` (IN `id` INT(25)) BEGIN
 SELECT
     *
 from
@@ -420,13 +419,13 @@ from
 where
     id_voucher = id;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_read` () BEGIN
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `voucher_read` () BEGIN
 SELECT
     *
 FROM
     vouchers;
 
-END $ $ CREATE DEFINER = `root` @`localhost` PROCEDURE `voucher_update` (
+END $ $ CREATE DEFINER = `ziaq` @`localhost` PROCEDURE `voucher_update` (
     IN `id` VARCHAR(36),
     IN `amount` INT(4),
     IN `price` FLOAT

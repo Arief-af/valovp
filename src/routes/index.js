@@ -41,7 +41,7 @@ router.post('/vouchers/create', vouchers.createDataVouchers);
 router.post('/vouchers/delete', vouchers.deleteDataVouchers);
 
 
-router.get('/users', authMiddleware, users.getDataUser);
+router.get('/users', users.getDataUser);
 router.get('/users', users.getDataUser);
 router.get('/users/edit', users.editDataUser);
 router.post('/users/update', users.updateDataUser);
