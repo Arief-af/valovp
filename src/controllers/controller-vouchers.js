@@ -30,7 +30,6 @@ module.exports ={
 
     createDataVouchers(req,res){
         const id = uuidv4();
-        console.log(req.body);
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
@@ -41,7 +40,7 @@ module.exports ={
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data voucher with ${uuid} has been created`,
+                    message: `Data voucher with ${id} has been created`,
                     data: results 
                 });
             });
@@ -92,8 +91,8 @@ module.exports ={
             if (err) throw err;
             connection.query(
                 `
-               call voucher_edit('${req.query.id_voucher}');
-                `
+               call voucher_edit('?')
+                `,[req.query.id_voucher]
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 

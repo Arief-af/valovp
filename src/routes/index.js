@@ -13,6 +13,8 @@ const authMiddleware = require('../middleware/auth');
 module.exports = router;
 
 router.get('/checkout', checkout.getDataCheckout);
+router.get('/checkout/edit', checkout.editDataCheckout);
+router.get('/checkout/user', checkout.userCheckout);
 router.post('/checkout/update', checkout.updateDataCheckout);
 router.post('/checkout/create', checkout.createDataCheckout);
 router.post('/checkout/delete', checkout.deleteDataCheckout);
@@ -42,11 +44,11 @@ router.post('/vouchers/delete', vouchers.deleteDataVouchers);
 
 
 router.get('/users', users.getDataUser);
-router.get('/users', users.getDataUser);
 router.get('/users/edit', users.editDataUser);
 router.post('/users/update', users.updateDataUser);
 router.post('/users/create', users.createDataUser);
 router.post('/users/delete', users.deleteDataUser);
+router.post('/users/password', users.updatePassword);
 
 router.get('/roles', roles.getDataRole);
 router.get('/roles/edit', roles.editDataRole);

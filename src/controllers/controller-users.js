@@ -88,6 +88,27 @@ module.exports ={
         })
     },
 
+    updatePassword(req,res){
+        pool.getConnection(function(err, connection) {
+            const id = req.body.id_user
+            const hashedPassword = bcrypt.hash(req.body.password, 10);
+            if (err) throw err;
+            connection.query(
+                `
+               call user_password('${hashedPassword}', '${id}');
+                `
+            , function (error, results) {
+                if(error) throw error;  
+                res.send({ 
+                    success: true, 
+                    message: `Data user with ${id} has been updated`,
+                    data: results 
+                });
+            });
+            connection.release();
+        })
+    },
+
     editDataUser(req,res){
         pool.getConnection(function(err, connection) {
             if (err) throw err;
