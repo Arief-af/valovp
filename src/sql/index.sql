@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 11, 2023 at 09:12 AM
+-- Generation Time: Jun 11, 2023 at 09:20 AM
 -- Server version: 8.0.33-0ubuntu0.20.04.2
 -- PHP Version: 8.0.29
 
@@ -26,11 +26,11 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_create` (IN `id` VARCHAR(36), IN `name` VARCHAR(75))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `bank_create` (IN `id` VARCHAR(36), IN `name` VARCHAR(75))  BEGIN
 insert INTO banks(id_bank, name) VALUES(id_bank, name);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_delete` (IN `id` VARCHAR(36))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `bank_delete` (IN `id` VARCHAR(36))  BEGIN
        DECLARE affected_rows INT;
 
         DELETE FROM banks WHERE id_bank = id;
@@ -41,15 +41,15 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_delete` (IN `id` VARCHAR(36)) 
        END IF;
  END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_edit` (IN `id` VARCHAR(36))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `bank_edit` (IN `id` VARCHAR(36))  BEGIN
    SELECT * from banks where id_bank = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_read` ()  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `bank_read` ()  BEGIN
    SELECT * FROM banks;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `bank_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(75))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `bank_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(75))  BEGIN
  UPDATE banks SET name = name WHERE id_bank = id;
 END$$
 
@@ -75,15 +75,15 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `chackout_user` (IN `uid` VARCHAR(36
     WHERE transactions.user_id = uid;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `change_status` (IN `id` VARCHAR(36), IN `status` ENUM('pending','success',' failed'))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `change_status` (IN `id` VARCHAR(36), IN `status` ENUM('pending','success',' failed'))  BEGIN
 UPDATE checkout set status = status WHERE id_checkout = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `checkout_create` (IN `id` VARCHAR(36), IN `virtual_account_id` VARCHAR(36), IN `transaction_id` VARCHAR(36), IN `total_payment` FLOAT, IN `status` ENUM('pending','success',' failed'), IN `tm` TIMESTAMP)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkout_create` (IN `id` VARCHAR(36), IN `virtual_account_id` VARCHAR(36), IN `transaction_id` VARCHAR(36), IN `total_payment` FLOAT, IN `status` ENUM('pending','success',' failed'), IN `tm` TIMESTAMP)  BEGIN
    insert INTO checkout(id_checkout, virtual_account_id, transaction_id, total_payment, status, timestamp) VALUES(id, virtual_account_id, transaction_id, total_payment, status, tm);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `checkout_delete` (IN `id` VARCHAR(36))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkout_delete` (IN `id` VARCHAR(36))  BEGIN
        DECLARE affected_rows INT;
 
         DELETE FROM checkout WHERE id_checkout = id;
@@ -113,7 +113,7 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `checkout_edit` (IN `checkoutID` VAR
     checkout.id_checkout = checkoutID;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `checkout_read` ()  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkout_read` ()  BEGIN
   SELECT
     checkout.id_checkout,
     transactions.riotId,
@@ -134,7 +134,7 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `checkout_read` ()  BEGIN
     JOIN users ON transactions.user_id = users.id_user;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `checkout_update` (IN `id` VARCHAR(36), IN `va_id` VARCHAR(36), IN `trans_id` VARCHAR(36), IN `total_payment` FLOAT, IN `status` ENUM('pending','success',' failed'))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkout_update` (IN `id` VARCHAR(36), IN `va_id` VARCHAR(36), IN `trans_id` VARCHAR(36), IN `total_payment` FLOAT, IN `status` ENUM('pending','success',' failed'))  BEGIN
    UPDATE checkout SET virtual_account_id = va_id, transaction_id = trans_id, total_payment = total_payment, status =    status WHERE id_checkout = id;
 END$$
 
@@ -142,11 +142,11 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `login` (IN `uname` VARCHAR(100))  B
 SELECT users.id_user, users.name, users.username, users.email, roles.name AS role_name, roles.id_role AS role_id FROM users JOIN roles ON users.role_id = roles.id_role WHERE username = uname;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_create` (IN `id_role` VARCHAR(36), IN `name` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_create` (IN `id_role` VARCHAR(36), IN `name` VARCHAR(50))  BEGIN
 insert INTO roles(id_role, name) VALUES(id_role, name);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_delete` (IN `id` VARCHAR(36))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_delete` (IN `id` VARCHAR(36))  BEGIN
     DECLARE affected_rows INT;
 
     DELETE FROM roles WHERE id_role = id;
@@ -157,23 +157,23 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_delete` (IN `id` VARCHAR(36)) 
     END IF;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_edit` (IN `id` VARCHAR(36))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_edit` (IN `id` VARCHAR(36))  BEGIN
 SELECT * from roles where id_role = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_read` ()  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_read` ()  BEGIN
 SELECT * FROM roles;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `role_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `role_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(50))  BEGIN
 UPDATE roles SET name = name WHERE id_role = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `transaction_create` (IN `id_transaction` VARCHAR(36), IN `voucher_id` VARCHAR(36), IN `user_id` VARCHAR(36), IN `riotId` VARCHAR(50), IN `timestamp` TIMESTAMP)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_create` (IN `id_transaction` VARCHAR(36), IN `voucher_id` VARCHAR(36), IN `user_id` VARCHAR(36), IN `riotId` VARCHAR(50), IN `timestamp` TIMESTAMP)  BEGIN
    insert INTO transactions(id_transaction, voucher_id, user_id, riotId, timestamp) VALUES(id_transaction, voucher_id, user_id, riotId, timestamp);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `transaction_delete` (IN `id` VARCHAR(36))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_delete` (IN `id` VARCHAR(36))  BEGIN
        DECLARE affected_rows INT;
 
         DELETE FROM transactions WHERE id_transaction = id;
@@ -184,21 +184,21 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `transaction_delete` (IN `id` VARCHA
        END IF;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `transaction_read` ()  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_read` ()  BEGIN
 SELECT transactions.id_transaction, users.username , vouchers.amount, vouchers.price FROM transactions
 JOIN vouchers ON transactions.voucher_id = vouchers.id_voucher
 JOIN users ON transactions.user_id = users.id_user;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `transaction_update` (IN `id` VARCHAR(36), IN `vcr_id` INT(36), IN `usr_id` INT(36), IN `riotId` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_update` (IN `id` VARCHAR(36), IN `vcr_id` INT(36), IN `usr_id` INT(36), IN `riotId` VARCHAR(50))  BEGIN
    UPDATE transactions SET voucher_id = vcr_id, user_id = usr_id WHERE id_transaction = id;
    END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_create` (IN `id_user` VARCHAR(36), IN `role_id` VARCHAR(36), IN `email` VARCHAR(30), IN `username` VARCHAR(30), IN `password` VARCHAR(50), IN `name` VARCHAR(30))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `user_create` (IN `id_user` VARCHAR(36), IN `role_id` VARCHAR(36), IN `email` VARCHAR(30), IN `username` VARCHAR(30), IN `password` VARCHAR(50), IN `name` VARCHAR(30))  BEGIN
  insert INTO users(id_user, role_id, email, username, password, name) VALUES(id_user, role_id, email, username, password, name);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_delete` (IN `id` VARCHAR(36))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `user_delete` (IN `id` VARCHAR(36))  BEGIN
        DECLARE affected_rows INT;
 
         DELETE FROM users WHERE id_user = id;
@@ -209,7 +209,7 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_delete` (IN `id` VARCHAR(36)) 
        END IF;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_edit` (IN `id` VARCHAR(25))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `user_edit` (IN `id` VARCHAR(25))  BEGIN
    SELECT * from users where id_user = id;
 END$$
 
@@ -219,19 +219,19 @@ SET users.password = pw
 WHERE users.id_user = pw;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_read` ()  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `user_read` ()  BEGIN
  SELECT users.id_user, users.name, users.username, users.email, roles.name AS role_name, roles.id_role AS role_id FROM users JOIN roles ON users.role_id = roles.id_role;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `user_update` (IN `id` VARCHAR(36), IN `role_id` VARCHAR(36), IN `email` VARCHAR(30), IN `username` VARCHAR(30), IN `password` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `user_update` (IN `id` VARCHAR(36), IN `role_id` VARCHAR(36), IN `email` VARCHAR(30), IN `username` VARCHAR(30), IN `password` VARCHAR(50))  BEGIN
  UPDATE users SET role_id = role_id, email = email, username = username, password = password  WHERE id_user = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_create` (IN `id` VARCHAR(36), IN `name` VARCHAR(25), IN `number` VARCHAR(25))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `virtual_account_create` (IN `id` VARCHAR(36), IN `name` VARCHAR(25), IN `number` VARCHAR(25))  BEGIN
    insert INTO virtual_account(id_virtual_account, name, number) VALUES(id, name, number);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_delete` (IN `id` VARCHAR(36))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `virtual_account_delete` (IN `id` VARCHAR(36))  BEGIN
       DECLARE affected_rows INT;
 
        DELETE FROM virtual_account WHERE id_virtual_account = id;
@@ -242,23 +242,23 @@ CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_delete` (IN `id` VA
       END IF;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_edit` (IN `id` VARCHAR(25))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `virtual_account_edit` (IN `id` VARCHAR(25))  BEGIN
    SELECT * from virtual_account WHERE id_virtual_account = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_read` ()  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `virtual_account_read` ()  BEGIN
    SELECT * FROM virtual_account;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `virtual_account_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(25), IN `number` VARCHAR(25))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `virtual_account_update` (IN `id` VARCHAR(36), IN `name` VARCHAR(25), IN `number` VARCHAR(25))  BEGIN
    UPDATE virtual_account SET name = name, number = number WHERE id_virtual_account = id;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `voucher_create` (IN `id` VARCHAR(36), IN `amount` INT(4), IN `price` FLOAT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `voucher_create` (IN `id` VARCHAR(36), IN `amount` INT(4), IN `price` FLOAT)  BEGIN
 insert INTO vouchers(id_voucher, amount, price) VALUES(id, amount, price);
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `voucher_delete` (IN `id` VARCHAR(36))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `voucher_delete` (IN `id` VARCHAR(36))  BEGIN
 DECLARE affected_rows INT;
 
 DELETE FROM vouchers WHERE id_voucher = id;
@@ -269,15 +269,15 @@ SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The provided ID does not exist.';
 END if;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `voucher_edit` (IN `id` INT(25))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `voucher_edit` (IN `id` INT(25))  BEGIN
    SELECT * from vouchers where id_voucher = id;
  END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `voucher_read` ()  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `voucher_read` ()  BEGIN
    SELECT * FROM vouchers;
 END$$
 
-CREATE DEFINER=`ziaq`@`localhost` PROCEDURE `voucher_update` (IN `id` VARCHAR(36), IN `amount` INT(4), IN `price` FLOAT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `voucher_update` (IN `id` VARCHAR(36), IN `amount` INT(4), IN `price` FLOAT)  BEGIN
 UPDATE vouchers SET amount = amount, price = price WHERE id_voucher = id;
 END$$
 
@@ -316,20 +316,6 @@ CREATE TABLE `checkout` (
   `status` enum('pending','success',' failed') NOT NULL,
   `timestamp` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `checkout`
---
-
-INSERT INTO `checkout` (`id_checkout`, `virtual_account_id`, `transaction_id`, `total_payment`, `status`, `timestamp`) VALUES
-('1b3064ac-2055-4e55-85b2-2eaa60621bdb', '7e4ee3d4-aa16-492a-a1c9-2c18d02de3b4', 'c41ec3cd-f271-4fc1-a99e-d3a02a4ad964', 501000, 'pending', '2023-06-10 19:04:19'),
-('1cca8ef3-df44-4365-a4ea-4befaea31e6e', '461e5549-46e9-4ac3-a814-e9beb0aab577', '6e3c76d7-42a8-4762-bd94-35743f48924b', 501000, 'success', '2023-06-11 08:53:33'),
-('380825e2-28a1-4c12-b377-5f94559a7700', 'a1d1c183-a2e2-428c-9a62-00670e249272', '2b9d3c52-4c8e-4ec9-b7ee-4580ac5ce68d', 1213120, 'success', '2023-06-10 19:56:43'),
-('393b86e7-ca38-459d-80ef-451f57984b28', '0f7ca9bf-bba3-40c0-8363-5a130ae99eff', 'c95bb19f-5fed-482e-a05e-610eadf94e52', 1213120, 'pending', '2023-06-10 23:54:55'),
-('63c331df-743e-43df-8ada-e621f4a70077', '447468af-0b6b-4b56-ba5d-91813a27fd61', '8be5447d-2345-4a8a-b076-a9945b86314b', 501000, 'success', '2023-06-11 09:04:25'),
-('7a4383db-4be0-4f81-ad3d-c44e1aac5576', '0cb39bce-452a-4613-ab1f-4c4d5869a166', 'f0e25231-bfae-4821-877b-178d34fd6e7b', 501000, 'success', '2023-06-10 19:52:11'),
-('7a7068b9-0805-4693-80cc-05aa68060d3e', '6e256f9f-91a2-49bd-b36c-fee3137cdd21', '3db81c43-7033-4a56-954f-d080484f1954', 1213120, 'success', '2023-06-10 19:54:46'),
-('cfe558ca-6fcf-4446-9230-c44f82f96684', 'e7e3ec92-0bfe-466a-bd58-f592651d7d20', '957c44a4-b410-4cfe-9b31-96c4a071c4ae', 501000, 'pending', '2023-06-10 18:15:10');
 
 -- --------------------------------------------------------
 
@@ -374,6 +360,7 @@ INSERT INTO `transactions` (`id_transaction`, `voucher_id`, `user_id`, `timestam
 ('17eef262-6970-44be-bda3-252c7cc88302', 'e3e0345a-6576-492c-9b04-d0269cf068dd', '5590a8b8-af02-4af3-af77-f6e32d59156a', '2023-06-10 17:56:22', 'moonrise#nite'),
 ('18ab992a-17be-4011-a167-19917409f2cc', '742b463f-54b1-49fd-87b0-0dd8cbf889ef', '5590a8b8-af02-4af3-af77-f6e32d59156a', '2023-06-10 17:12:44', '12121'),
 ('1b06b81a-12c2-4656-b449-dd69e05c271d', 'e3e0345a-6576-492c-9b04-d0269cf068dd', '5590a8b8-af02-4af3-af77-f6e32d59156a', '2023-06-10 16:51:02', 'moonrise#nite'),
+('1eb85f2c-43f8-43ef-b1e6-962a28add2b7', '742b463f-54b1-49fd-87b0-0dd8cbf889ef', '5590a8b8-af02-4af3-af77-f6e32d59156a', '2023-06-11 09:16:06', 'hayo#h4y'),
 ('2173c0cb-5f7c-4a6f-9057-4f037aaffa11', '742b463f-54b1-49fd-87b0-0dd8cbf889ef', '5590a8b8-af02-4af3-af77-f6e32d59156a', '2023-06-10 17:18:00', 'djadjwad#nite'),
 ('23b8a48e-39e2-4780-9878-6547f210881e', 'e3e0345a-6576-492c-9b04-d0269cf068dd', '5590a8b8-af02-4af3-af77-f6e32d59156a', '2023-06-10 17:15:19', 'lalalenda#dawd'),
 ('248262e6-02be-4f3b-808d-e608439c3ee2', '742b463f-54b1-49fd-87b0-0dd8cbf889ef', '5590a8b8-af02-4af3-af77-f6e32d59156a', '2023-06-10 18:14:51', 'undefined'),
@@ -450,34 +437,6 @@ CREATE TABLE `virtual_account` (
   `name` varchar(25) NOT NULL,
   `number` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `virtual_account`
---
-
-INSERT INTO `virtual_account` (`id_virtual_account`, `name`, `number`) VALUES
-('02bf5af7-1c64-4102-b02e-e9cf4478613c', 'TOLOL', '46095095'),
-('0cb39bce-452a-4613-ab1f-4c4d5869a166', 'parah euy', '213097422'),
-('0f7ca9bf-bba3-40c0-8363-5a130ae99eff', 'parah euy', '259828159'),
-('1', 'daffa', '1254421'),
-('118711f1-7049-4179-83ab-6af7ab571fdb', 'TOLOL', '294064625'),
-('1d6b792e-2c9d-4421-b8c9-e126521cebde', 'parah euy', '493582638'),
-('1e6bb199-6ea9-462b-b5bd-679959020b66', 'parah euy', '510374297'),
-('2', 'fauzi', '2203156'),
-('3', 'cakcukcok', '33655488512'),
-('447468af-0b6b-4b56-ba5d-91813a27fd61', 'BCA', '1148479663'),
-('461e5549-46e9-4ac3-a814-e9beb0aab577', 'parah euy', '1176393033'),
-('4a4d195b-5933-41f0-b23a-0c8b272ccbdc', 'TOLOL', '1246566747'),
-('6e256f9f-91a2-49bd-b36c-fee3137cdd21', 'TOLOL', '1847947167'),
-('7e4ee3d4-aa16-492a-a1c9-2c18d02de3b4', 'TOLOL', '2119099348'),
-('81a592a3-40f8-4e2e-96fd-3a2caba8e907', 'parah euy', '2175111843'),
-('90a4d908-85ad-4629-ab13-7c8bdc324b26', 'parah euy', '2426722568'),
-('95ca3f67-e50b-4c68-8970-229566a58ab3', 'parah euy', '2513059687'),
-('9badcb44-06bc-4f7d-a6cd-d948d0ba5b18', 'parah euy', '2611858244'),
-('9ef3297c-8489-4edb-b7cd-aa7fb24ee10b', 'parah euy', '2666735996'),
-('a1d1c183-a2e2-428c-9a62-00670e249272', 'parah euy', '2714878339'),
-('e7e3ec92-0bfe-466a-bd58-f592651d7d20', 'TOLOL', '3890474130'),
-('ffdd738b-5b39-4673-ab12-9d3e711d9224', 'parah euy', '4292703115');
 
 -- --------------------------------------------------------
 
