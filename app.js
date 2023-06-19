@@ -15,5 +15,5 @@ const appRoute = require("./src/routes/index");
 app.use("/api", appRoute);
 
 app.listen(3000, () => {
-  console.log("Server Berjalan di Port : 8080");
+  console.log("Server Berjalan di Port : 3000");
 });
