@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 const corsOptions = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  origin: ["http://localhost:9000","https://14a0-2001-448a-3050-a0a1-4558-593c-e406-d6a4.ngrok-free.app"],
+  origin: 'https://vpvalorant.ziaq.my.id',
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
