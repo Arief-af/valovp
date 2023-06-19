@@ -1,5 +1,6 @@
 const config = require('../configs/database');
 const mysql = require('mysql2');
+const { v4: uuidv4 } = require("uuid");
 const pool = mysql.createPool(config);
 
 pool.on('error',(err)=> {
@@ -28,17 +29,18 @@ module.exports ={
     },
 
     createDataBanks(req,res){
+        const uuid = uuidv4();
         pool.getConnection(function(err, connection) {
             if (err) throw err;
             connection.query(
                 `
-               call bank_create('${req.body.id_bank}', '${req.body.name}');
+               call bank_create('${uuid}', '${req.body.name}');
                 `
             , function (error, results) {
                 if(error) throw error;  
                 res.send({ 
                     success: true, 
-                    message: `Data bank with ${req.body.id_bank} has been created`,
+                    message: `Data bank with ${uuid} has been created`,
                     data: results 
                 });
             });
