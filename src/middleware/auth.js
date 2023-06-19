@@ -1,6 +1,6 @@
 // middleware/auth.js
 const jwt = require('jsonwebtoken');
-const config = require('../configs/database');
+const jwtConfig = require("../configs/jwt");
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
@@ -10,7 +10,7 @@ function authenticateToken(req, res, next) {
     return res.status(401).json({ message: 'Authentication token not found.' });
   }
 
-  jwt.verify(token, config.secret, (err, user) => {
+  jwt.verify(token, jwtConfig.secret, (err, user) => {
     if (err) {
       return res.status(403).json({ message: 'Invalid or expired token.' });
     }

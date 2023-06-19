@@ -2,21 +2,26 @@ const jwt = require("jsonwebtoken");
 const config = require("../configs/database");
 const jwtConfig = require("../configs/jwt");
 const mysql = require("mysql2");
-const bcrypt = require('bcrypt');
-const { v4: uuidv4 } = require('uuid');
-
+const bcrypt = require("bcrypt");
+const { v4: uuidv4 } = require("uuid");
 
 // Create a MySQL connection pool
 const pool = mysql.createPool(config);
 
 module.exports = {
-  login(req, res) {
+  logout(req, res) {
+    return res.json({
+      message: "logout successful",
+    });
+  },
+
+  async login(req, res) {
     const { username, password } = req.body;
 
     // Execute the query to get the user by username
     pool.query(
       // nanti ganti bagian ini pake procedure daf
-      "SELECT users.name, users.username, users.email, users.password, roles.name AS role_name FROM users JOIN roles ON users.role_id = roles.id_role WHERE username = ?",
+      "SELECT users.id_user,users.name, users.username, users.email, users.password, roles.name AS role_name FROM users JOIN roles ON users.role_id = roles.id_role WHERE username = ?",
       [username],
       async (error, results) => {
         if (error) {
@@ -38,9 +43,8 @@ module.exports = {
 
         // Generate the JWT token
         const token = jwt.sign(
-          { id: user.id, username: user.username },
-          jwtConfig.secret,
-          { expiresIn: "1h" }
+          { id: user.id_user, username: user.username },
+          jwtConfig.secret
         );
         res.json({ user: user, token: token });
       }
@@ -56,20 +60,21 @@ module.exports = {
     // Execute the query to insert the user into the database
     pool.query(
       "INSERT INTO users (id_user, name, role_id, email, username, password) VALUES (?, ?, ?, ?, ?, ?)",
-      [id,name, '214ed97f-6674-44b8-8a8d-6fdf0a02db54',email, username, hashedPassword],
+      [
+        id,
+        name,
+        "214ed97f-6674-44b8-8a8d-6fdf0a02db54",
+        email,
+        username,
+        hashedPassword,
+      ],
       (error, results) => {
         if (error) {
           console.error("Error executing MySQL query:", error);
           return res.status(500).json({ message: "Internal Server Error" });
         }
 
-        // Generate the JWT token
-        const token = jwt.sign(
-          { id: results.insertId, username: username },
-          jwtConfig.secret,
-          { expiresIn: "1h" }
-        );
-        res.json({ message: 'user registered' });
+        res.json({ message: "user registered" });
       }
     );
   },
